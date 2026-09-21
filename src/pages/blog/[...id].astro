@@ -1,4 +1,41 @@
 ---
-import Base from '../../layouts/Base.astro';import {getCollection,render} from 'astro:content';export async function getStaticPaths(){return (await getCollection('blog',p=>!p.data.draft)).map(p=>({params:{id:p.id},props:{p}}))}const {p}=Astro.props;const {Content}=await render(p);
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const post = Astro.props?.post as CollectionEntry<'blog'> | undefined;
+const rendered = post ? await render(post) : undefined;
+const Content = rendered?.Content;
 ---
-<Base title={`${p.data.title} | Dongming Zhao, LCSW`} description={p.data.description} path={`/blog/${p.id}/`}><article class="section"><div class="shell prose"><p class="eyebrow">{p.data.date.toLocaleDateString('en-US',{dateStyle:'long'})}</p><h1>{p.data.title}</h1><Content/></div></article></Base>
+
+{
+  post && Content && (
+    <Base
+      title={`${post.data.title} | Dongming Zhao, LCSW`}
+      description={post.data.description}
+      path={`/blog/${post.id}/`}
+    >
+      <article class="section">
+        <div class="shell prose">
+          <p class="eyebrow">
+            {post.data.date.toLocaleDateString('en-US', {
+              dateStyle: 'long',
+            })}
+          </p>
+
+          <h1>{post.data.title}</h1>
+          <Content />
+        </div>
+      </article>
+    </Base>
+  )
+}
