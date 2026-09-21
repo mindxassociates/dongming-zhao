@@ -1,0 +1,6 @@
+---
+import Base from '../layouts/Base.astro';import site from '../data/site.json';
+---
+<Base title="Contact Dongming Zhao, LCSW | Free Consultation" description="Book a complimentary 15-minute consultation for individual or couples therapy with Dongming Zhao, LCSW." path="/contact/" hideClosing={true}>
+<section class="section"><div class="shell grid-2"><div class="reveal"><p class="eyebrow">Let’s work together</p><h1>I’d love to hear from you.</h1><p class="lede">Our first conversation is an opportunity to connect, answer your questions, and see whether we’re a good fit.</p><p>Consultations are held by secure video through Sessions Health.</p><a class="button" href={site.bookingUrl} target="_blank" rel="noopener">{site.cta}</a></div><aside class="card reveal"><h2>Practice details</h2><p><strong>Email</strong><br/><a href={`mailto:${site.email}`}>{site.email}</a></p><p><strong>Location</strong><br/>Online throughout California<br/>In person in Anaheim, CA 92807</p><p><strong>Languages</strong><br/>{site.languages}</p><p><small>If you are experiencing an emergency, call 911 or go to the nearest emergency department. You can call or text 988 for crisis support in the U.S.</small></p></aside></div></section>
+</Base>

@@ -1,0 +1,4 @@
+---
+import Base from '../../layouts/Base.astro';import {getCollection} from 'astro:content';const posts=(await getCollection('blog',p=>!p.data.draft)).sort((a,b)=>b.data.date.valueOf()-a.data.date.valueOf());
+---
+<Base title="Reflections & Resources | Dongming Zhao, LCSW" description="Therapy reflections and mental health resources from Dongming Zhao, LCSW." path="/blog/"><section class="page-hero"><div class="shell"><p class="eyebrow">Reflections & resources</p><h1>Ideas for understanding yourself and your relationships.</h1></div></section><section class="section band"><div class="shell cards">{posts.length?posts.map(p=><article class="card"><h2>{p.data.title}</h2><p>{p.data.description}</p><a href={`blog/${p.id}/`}>Read article</a></article>):<p>No articles are published yet. Please check back soon.</p>}</div></section></Base>

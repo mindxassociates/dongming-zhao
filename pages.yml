@@ -1,0 +1,39 @@
+media:
+  input: public/images/uploads
+  output: /images/uploads
+content:
+  - name: settings
+    label: Practice settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - { name: name, label: Professional name, type: string }
+      - { name: shortName, label: Short name, type: string }
+      - { name: email, label: Public email, type: string }
+      - { name: bookingUrl, label: Consultation booking link, type: string }
+      - { name: location, label: Office location, type: string }
+      - { name: serviceArea, label: Service area, type: string }
+      - { name: languages, label: Languages, type: string }
+      - { name: cta, label: Booking button text, type: string }
+  - name: blog
+    label: Articles
+    type: collection
+    path: src/content/blog
+    format: yaml-frontmatter
+    filename: "{fields.title|slugify}.md"
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Short description, type: text, required: true }
+      - { name: date, label: Publication date, type: date, required: true }
+      - { name: draft, label: Keep private as draft, type: boolean, default: true }
+      - { name: image, label: Featured image, type: image, required: false }
+      - { name: imageAlt, label: Featured image description, type: string, required: false }
+      - { name: body, label: Article, type: rich-text, required: true }
