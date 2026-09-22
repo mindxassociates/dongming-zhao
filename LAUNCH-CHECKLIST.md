@@ -1,7 +1,7 @@
 # Launch checklist
 
 - [x] Verified — Original layout, colors, images, and supplied copy restored
-- [x] Verified — Unapproved crisis-number wording removed
+- [x] Verified — Dongming’s approved emergency and crisis-support wording preserved
 - [x] Verified — English and Chinese blog collections separated
 - [x] Verified — Draft posts excluded from routes and listings
 - [x] Verified — Canonical, Open Graph, robots, sitemap, hreflang, and structured data configured

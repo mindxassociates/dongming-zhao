@@ -1,9 +1,0 @@
----
-const {path='/',lang='en'}=Astro.props;
-const zh=lang.startsWith('zh');
-const nav=zh?[['首页','./'],['关于我','about/'],['个人咨询','individual-therapy/'],['伴侣咨询','couples-therapy/'],['常见问题','faq/']]:[['About','about/'],['Individual Therapy','individual-therapy/'],['Couples Therapy','couples-therapy/'],['中文','zh/'],['FAQ','faq/']];
----
-<header class="site-header"><a class="skip" href="#main">{zh?'跳至正文':'Skip to content'}</a><div class="shell nav-wrap"><a class="brand" href="./">Dongming Zhao<span>LCSW</span></a><button class="menu" aria-expanded="false" aria-controls="nav">{zh?'菜单':'Menu'}</button><nav id="nav" aria-label={zh?'主导航':'Primary navigation'}><ul>{nav.map(([label,href])=><li><a href={href} aria-current={path.replace(/^\/+|\/+$/g,'')===href.replace(/^\.\/|\/$/g,'')?'page':undefined}>{label}</a></li>)}<li><a class="button small" href="contact/">{zh?'联系我':'Contact'}</a></li></ul></nav></div></header>
-<script is:inline>
-const b=document.querySelector('.menu'),n=document.querySelector('#nav');b?.addEventListener('click',()=>{const o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!o));n?.classList.toggle('open',!o)});
-</script>

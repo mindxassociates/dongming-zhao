@@ -8,7 +8,7 @@
 | `couples-therapy.html` | `/couples-therapy/` | Original content preserved |
 | `zhongwen.html` | `/zh/` | Original Chinese page preserved; old URL redirects |
 | `faq.html` | `/faq/` | Original FAQ preserved |
-| `contact.html` | `/contact/` | Original contact content preserved; no added crisis numbers |
+| `contact.html` | `/contact/` | Updated consultation and clinician-supplied emergency guidance preserved |
 | none | `/blog/` | English Pages CMS collection |
 | none | `/zh/blog/` | Chinese Pages CMS collection |
 

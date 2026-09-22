@@ -1,4 +1,0 @@
----
-import Base from '../../layouts/Base.astro';import {getCollection,render} from 'astro:content';export async function getStaticPaths(){return (await getCollection('blog',p=>!p.data.draft)).map(p=>({params:{id:p.id},props:{p}}))}const p=Astro.props?.p;const rendered=p?await render(p):undefined;const Content=rendered?.Content;
----
-{p&&Content&&<Base title={`${p.data.title} | Dongming Zhao, LCSW`} description={p.data.description} path={`/blog/${p.id}/`}><article class="section"><div class="shell prose"><p class="eyebrow">{p.data.date.toLocaleDateString('en-US',{dateStyle:'long'})}</p><h1>{p.data.title}</h1><Content/></div></article></Base>}

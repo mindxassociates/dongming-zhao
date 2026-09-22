@@ -46,25 +46,6 @@
   :root { --duration: 0.001s; }
 }
 
-/* Blog additions use the original typography, spacing, and palette. */
-.blog-hero h1 { max-width: 18ch; font-size: var(--step-5); }
-.blog-language { margin-top: 1.5rem; color: var(--color-terracotta-dark); }
-.blog-language a, .blog-card h2 a { text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
-.blog-language a:hover, .blog-language a:focus-visible, .blog-card h2 a:hover, .blog-card h2 a:focus-visible { text-decoration: underline; }
-.blog-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4.5rem); }
-.blog-card { border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
-.blog-card h2 { font-size: var(--step-4); margin-bottom: 1rem; }
-.blog-card .btn { margin-top: 1.5rem; padding-inline: 0; }
-.blog-date { margin-bottom: 0.75rem; color: var(--color-ink-faint); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.blog-prose { max-width: 760px; }
-.blog-prose h1 { font-size: var(--step-5); }
-.blog-prose .prose { margin-top: 2.5rem; }
-.blog-prose .prose :is(h2, h3) { margin: 2.5rem 0 1rem; }
-.blog-prose .prose :is(p, ul, ol, blockquote) { margin: 0 0 1.35rem; }
-.blog-prose .prose a { color: var(--color-terracotta-dark); text-decoration: underline; text-underline-offset: 0.16em; }
-.blog-image { width: 100%; max-height: 520px; object-fit: cover; margin: 2rem 0; }
-@media (max-width: 720px) { .blog-list { grid-template-columns: 1fr; } }
-
 /* ---- Reset ------------------------------------------------------------- */
 
 *,
@@ -536,9 +517,20 @@ main > section:first-child:not(.hero) {
 .hero__content {
   position: relative;
   z-index: 2;
-  max-width: 40rem;
+  /* Wide enough for the first of the two lines and no wider: "Greater
+     clarity. Deeper connection." measures 740px at the largest size. Well in
+     from the 1072px the page allows, so the block stays restrained and the
+     space around it stays generous. */
+  max-width: 47rem;
   margin-inline: auto;
   text-align: center;
+}
+
+/* Marginally tighter than the shared eyebrow's 1rem, so the label sits with
+   the headline rather than above it. Scoped to the hero; the eyebrows on the
+   other pages keep the shared interval. */
+.hero .eyebrow {
+  margin-bottom: clamp(0.65rem, 1.4vw, 0.8rem);
 }
 
 /* The dominant element on the page. It steps down from the shared display
@@ -547,14 +539,30 @@ main > section:first-child:not(.hero) {
    evened out rather than filled, which centred type needs — filling leaves a
    long line over a short one and the shape reads as a mistake. */
 .hero h1 {
-  font-size: clamp(2.05rem, 1.35rem + 2.35vw, 3.1rem);
+  /* A touch above the size this headline had originally — 52.8px against
+     49.6px at the cap, and a few per cent above it at every width below that.
+     The scale tracks the original's shape rather than departing from it. */
+  font-size: clamp(2.1rem, 1.4rem + 2.45vw, 3.3rem);
+  /* The original leading, restored. */
   line-height: 1.16;
   text-wrap: balance;
 }
 
-/* One quiet line, well clear of the headline above it. */
+/* The two halves of the headline are each their own line, which fixes the
+   break after "Deeper connection." rather than leaving it to the measure. On a
+   narrow screen the first half wraps inside itself, and because the two
+   sentences in it are close in length that break lands on the full stop
+   between them — so the headline reads a sentence to a line there too,
+   without a third break being forced into the markup. */
+.hero h1 span {
+  display: block;
+}
+
+/* One quiet line. The interval is pulled in from the 36px it was to about
+   26px, the largest of the three reductions, so the subtitle reads as part of
+   the headline's group rather than as a separate block beneath it. */
 .hero__meta {
-  margin-top: clamp(2rem, 4vh, 2.75rem);
+  margin-top: clamp(1.35rem, 2.9vh, 1.65rem);
   font-size: 0.95rem;
   letter-spacing: 0.01em;
   color: var(--color-ink-soft);
@@ -562,6 +570,13 @@ main > section:first-child:not(.hero) {
 
 .hero__actions {
   margin-top: 2.25rem;
+}
+
+/* Drawn in from 36px to about 28px, so the button closes the group instead of
+   standing apart from it. Scoped to the hero: the same class carries the
+   consultation button on the contact page, which keeps the 2.25rem above. */
+.hero .hero__actions {
+  margin-top: clamp(1.5rem, 3.1vh, 1.75rem);
 }
 
 @media (max-width: 700px) {
@@ -1037,6 +1052,15 @@ main > section:first-child:not(.hero) {
   gap: 1.5rem;
   font-size: 0.85rem;
   color: var(--color-ink-faint);
+}
+
+/* The disclaimer takes a whole row of the footer rather than standing as a
+   third column beside the copyright and the links. Its size and colour are
+   inherited from .site-footer__inner and the interval above it is that
+   container's existing 1.5rem gap, so no type, colour or spacing value is
+   restated here — only the fact that it gets its own line. */
+.site-footer__note {
+  width: 100%;
 }
 
 .site-footer__links {
@@ -1627,6 +1651,58 @@ main > section:first-child:not(.hero) {
   margin-top: 0;
 }
 
+/* The emergency notice is the last element of the consultation column, directly
+   under the button — inside the left cell rather than below the grid, so it
+   takes that column's left edge and its width without any alignment of its own.
+
+   Type: the body face, held a step below the body size at every width (and no
+   smaller than 13.2px, since this is information someone may need to read in a
+   hurry), in the palette's muted ink. Plain text — no rule, panel, icon or
+   heading.
+
+   The measure is the consultation paragraph's own: that paragraph is capped at
+   60ch of --step-2, and the notice runs at a near-constant 0.786 of --step-2 at
+   every width, so 60 ÷ 0.786 ≈ 76ch of the notice's own size is the same line
+   length to within a pixel. It only bites on the stacked layout, where the
+   column is wider than that measure; in the two-column layout the cap is lifted
+   (below), because there the paragraph is limited by the column rather than by
+   its cap, and the notice has to follow the column instead. */
+.page-contact .ct-emergency {
+  margin-top: clamp(1.25rem, 2.4vh, 1.5rem);
+  max-width: 76ch;
+  font-family: var(--font-body);
+  font-size: clamp(0.825rem, 0.78rem + 0.18vw, 0.9rem);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+@media (min-width: 901px) {
+  /* Bottom alignment with the details box, without a hand-tuned number. The
+     column is stretched to the height of the grid row — which is the card's,
+     the card being the taller of the two — and made a column flex container, so
+     `margin-top: auto` on the notice absorbs whatever slack is left and drops
+     its last line onto the row's bottom edge. Nothing above it moves: those
+     elements are still laid out from the top in source order, and the stretch
+     only adds height below them.
+
+     The gap's floor is padding rather than margin: an auto margin with no slack
+     to absorb collapses to zero, so where the notice is tall enough to fill the
+     column on its own — around 901–1000px, where the card is barely taller than
+     the button — the padding still holds it clear of the button instead of
+     letting the two touch. */
+  .page-contact .split > .prose {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-contact .split .ct-emergency {
+    max-width: none;
+    margin-top: auto;
+    padding-top: clamp(1.25rem, 2.4vh, 1.5rem);
+  }
+}
+
 /* ==========================================================================
    FAQ page — a practical page: facts in the open, questions behind a control
    Scoped to body.page-faq. The accordion, the eyebrow, the body copy, the
@@ -2212,7 +2288,10 @@ main > section:first-child:not(.hero) {
 
 .page-about .ab-cred {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 2.15fr);
+  /* One column now that the name block has gone, so the three remaining
+     columns run the full content width the four used to share. The padding and
+     the two rules on this element are untouched. */
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(1.75rem, 4vw, 3.5rem);
   align-items: start;
   padding-block: clamp(1.75rem, 3.5vh, 2.5rem);
@@ -2256,6 +2335,37 @@ main > section:first-child:not(.hero) {
 
 .page-about .ab-cred__item li + li {
   margin-top: 0.3rem;
+}
+
+@media (min-width: 901px) {
+  /* Three even columns across the full content width, now that the name block
+     has gone from the row. The old 1.6/0.7/1.05 split was weighted for the
+     narrower share this strip had beside that block.
+
+     Only above 900px: below it the row was already stacked, so the strip
+     already had the full width there, and dividing it evenly would squeeze
+     the approaches list from five lines to eight. That band keeps the split
+     it has, and so looks exactly as it did apart from the missing block. */
+  .page-about .ab-cred__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* The three tracks stay the even thirds they are; what changes is where each
+     block sits inside its own track. The first is left where it is, flush with
+     the left end of the rules. The second is centred in its track — and since
+     the middle third is itself centred on the section, that puts it on the
+     section's exact midpoint. The third is pushed to the end of its track, so
+     its last letter lands on the right end of the rules.
+
+     Only the blocks move: the text inside each one stays ranged left, so
+     LOCATION reads left-aligned as before rather than right-aligned. */
+  .page-about .ab-cred__item:nth-child(2) {
+    justify-self: center;
+  }
+
+  .page-about .ab-cred__item:nth-child(3) {
+    justify-self: end;
+  }
 }
 
 /* ---- Tablet & mobile ---------------------------------------------------
@@ -2543,3 +2653,21 @@ main > section:first-child:not(.hero) {
 .page-home .closing .hero__actions {
   margin-top: clamp(2.25rem, 4.5vh, 3rem);
 }
+/* Blog additions use Dongming's original typography, spacing, and palette. */
+.blog-hero h1 { max-width: 18ch; font-size: var(--step-5); }
+.blog-language { margin-top: 1.5rem; color: var(--color-terracotta-dark); }
+.blog-language a, .blog-card h2 a { text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+.blog-language a:hover, .blog-language a:focus-visible, .blog-card h2 a:hover, .blog-card h2 a:focus-visible { text-decoration: underline; }
+.blog-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4.5rem); }
+.blog-card { border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
+.blog-card h2 { font-size: var(--step-4); margin-bottom: 1rem; }
+.blog-card .btn { margin-top: 1.5rem; padding-inline: 0; }
+.blog-date { margin-bottom: 0.75rem; color: var(--color-ink-faint); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.blog-prose { max-width: 760px; }
+.blog-prose h1 { font-size: var(--step-5); }
+.blog-prose .prose { margin-top: 2.5rem; }
+.blog-prose .prose :is(h2, h3) { margin: 2.5rem 0 1rem; }
+.blog-prose .prose :is(p, ul, ol, blockquote) { margin: 0 0 1.35rem; }
+.blog-prose .prose a { color: var(--color-terracotta-dark); text-decoration: underline; text-underline-offset: 0.16em; }
+.blog-image { width: 100%; max-height: 520px; object-fit: cover; margin: 2rem 0; }
+@media (max-width: 720px) { .blog-list { grid-template-columns: 1fr; } }
