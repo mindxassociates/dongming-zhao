@@ -1,6 +1,105 @@
 ---
-import Base from '../layouts/Base.astro';import site from '../data/site.json';
+import Seo from '../components/Seo.astro';
 ---
-<Base title="Contact Dongming Zhao, LCSW | Free Consultation" description="Book a complimentary 15-minute consultation for individual or couples therapy with Dongming Zhao, LCSW." path="/contact/" hideClosing={true}>
-<section class="section"><div class="shell grid-2"><div class="reveal"><p class="eyebrow">Let’s work together</p><h1>I’d love to hear from you.</h1><p class="lede">Our first conversation is an opportunity to connect, answer your questions, and see whether we’re a good fit.</p><p>Consultations are held by secure video through Sessions Health.</p><a class="button" href={site.bookingUrl} target="_blank" rel="noopener">{site.cta}</a></div><aside class="card reveal"><h2>Practice details</h2><p><strong>Email</strong><br/><a href={`mailto:${site.email}`}>{site.email}</a></p><p><strong>Location</strong><br/>Online throughout California<br/>In person in Anaheim, CA 92807</p><p><strong>Languages</strong><br/>{site.languages}</p><p><small>If you are experiencing an emergency, call 911 or go to the nearest emergency department. You can call or text 988 for crisis support in the U.S.</small></p></aside></div></section>
-</Base>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Let&rsquo;s Connect | Dongming Zhao, LCSW</title>
+  <meta name="description" content="Book a complimentary 15-minute consultation with Dongming Zhao, LCSW — online therapy throughout California, in English and Mandarin." />
+  <Seo title="Let's Connect | Dongming Zhao, LCSW" description="Book a complimentary 15-minute consultation with Dongming Zhao, LCSW—online therapy throughout California, in English and Mandarin." path="/contact/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="page-contact">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header site-header--inset">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="/">Dongming Zhao</a>
+
+      <nav class="nav" data-open="false" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/individual-therapy/">Individual Therapy</a></li>
+          <li><a href="/couples-therapy/">Couples Therapy</a></li>
+          <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li class="nav__action"><a class="btn btn--primary btn--pill" href="/contact/" aria-current="page">Contact</a></li>
+        </ul>
+        <button class="nav__toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav__toggle-icon"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">Let&rsquo;s Work Together</span>
+          <h1><span>If this feels like the right place to begin,</span> <span>I&rsquo;d love to hear from you.</span></h1>
+          <hr class="rule" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split">
+        <div class="reveal prose">
+          <h2 class="h-lg">Complimentary 15-Minute Consultation</h2>
+          <p class="lede lede--wide ink">Our first conversation is simply an opportunity to connect, answer your questions, and see whether we&rsquo;re a good fit.</p>
+          <p class="ct-note">Consultations are held by secure video through Sessions Health.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="https://therapywithdongming.sessionshealth.com/request" target="_blank" rel="noopener noreferrer">Book a Free 15-Minute Consultation</a>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="contact-card">
+            <dl>
+              <div class="contact-detail">
+                <dt>Email</dt>
+                <dd><a href="mailto:therapywithdongming@gmail.com">therapywithdongming@gmail.com</a></dd>
+              </div>
+              <div class="contact-detail">
+                <dt>Location</dt>
+                <dd>Online throughout California</dd>
+              </div>
+              <div class="contact-detail">
+                <dt>Languages</dt>
+                <dd>English &amp; Mandarin</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p>&copy; <span id="year"></span> Dongming Zhao, LCSW</p>
+      <ul class="site-footer__links">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/individual-therapy/">Individual Therapy</a></li>
+        <li><a href="/couples-therapy/">Couples Therapy</a></li>
+        <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+        <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

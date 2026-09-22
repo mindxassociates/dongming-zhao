@@ -1,9 +1,168 @@
 ---
-import Base from '../layouts/Base.astro';
-const areas=[['Anxiety, depression, burnout, relationship difficulties, or self-criticism','You may look capable on the outside while privately feeling overwhelmed, disconnected, stuck in your thoughts, hard on yourself, or carrying grief after a loss.'],['Family-of-origin wounds and difficult relationship patterns','You may know where these patterns started and still find yourself people-pleasing, shutting down, feeling responsible for others, or repeating dynamics you thought you had outgrown.'],['Family, culture, and identity as an Asian or immigrant adult','This might look like complicated relationships with parents, guilt around setting boundaries, pressure to meet family expectations, or separating what you want from what you were taught you should want.'],['Fertility struggles, pregnancy loss, or reproductive trauma','Trying to conceive, fertility treatment, pregnancy loss, or a traumatic birth can bring grief, anxiety, shame, and disconnection that are hard to explain to others.']];
+import Seo from '../components/Seo.astro';
 ---
-<Base title="Individual Therapy in California | Dongming Zhao, LCSW" description="Individual therapy for anxiety, burnout, self-worth, relationship patterns, culture and identity, and reproductive trauma in California." path="/individual-therapy/">
-<section class="page-hero"><div class="shell reveal"><p class="eyebrow">Individual therapy</p><h1>A place to understand what keeps you stuck.</h1><p class="lede">Therapy can create room for curiosity, choice, and a more compassionate relationship with yourself.</p></div></section>
-<section class="section band"><div class="shell"><p class="eyebrow">Areas of support</p><h2>We may be a good fit if you are experiencing…</h2><div class="details">{areas.map(([q,a])=><details><summary>{q}</summary><div><p>{a}</p></div></details>)}</div></div></section>
-<section class="section"><div class="shell prose reveal"><p class="eyebrow">Working together</p><h2>Therapy that fits you—not a script.</h2><p class="lede">Therapy with me isn’t about handing you answers. It’s a space to understand yourself more clearly, with curiosity instead of criticism, so the choices you make actually feel like your own.</p><p>Some sessions slow down to make room for feelings you’ve never felt able to express. Others focus on relationship patterns, family dynamics, perfectionism, or beliefs you’ve carried for years. Sometimes we turn insight into action—a boundary, a hard decision, or the next meaningful step.</p></div></section>
-</Base>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Individual Therapy | Dongming Zhao, LCSW</title>
+  <meta name="description" content="Individual therapy for anxiety, burnout, self-worth, perfectionism, and the weight of others' expectations — online throughout California." />
+  <Seo title="Individual Therapy | Dongming Zhao, LCSW" description="Individual therapy for anxiety, burnout, self-worth, perfectionism, and the weight of others' expectations—online throughout California." path="/individual-therapy/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="page-individual">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header site-header--inset">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="/">Dongming Zhao</a>
+
+      <nav class="nav" data-open="false" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/individual-therapy/" aria-current="page">Individual Therapy</a></li>
+          <li><a href="/couples-therapy/">Couples Therapy</a></li>
+          <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li class="nav__action"><a class="btn btn--primary btn--pill" href="/contact/">Contact</a></li>
+        </ul>
+        <button class="nav__toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav__toggle-icon"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 1 — “Sound familiar?” — now the opening section -->
+    <section class="section it-spread it-spread--quotes">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">Sound familiar?</span>
+          <h2 class="h-lg section-heading">Maybe you&rsquo;ve been telling yourself&hellip;</h2>
+        </div>
+        <div class="quote-grid reveal">
+          <p class="quote">&ldquo;I&rsquo;m always overthinking.&rdquo;</p>
+          <p class="quote">&ldquo;I don&rsquo;t know why I can&rsquo;t just move on.&rdquo;</p>
+          <p class="quote">&ldquo;I care too much about what other people think.&rdquo;</p>
+          <p class="quote">&ldquo;I keep putting everyone else first.&rdquo;</p>
+          <p class="quote">&ldquo;If people knew the real me, they wouldn&rsquo;t like me.&rdquo;</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 — “We may be a good fit if…” — expandable rows -->
+    <section class="section section--band it-spread it-spread--fit">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">Areas of support</span>
+          <h2 class="h-lg">We may be a good fit if you are experiencing&hellip;</h2>
+        </div>
+
+        <div class="faq-list it-rows reveal">
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="it-panel-1" id="it-trigger-1">
+              <span>Anxiety, depression, burnout, relationship difficulties, or self-criticism</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="it-panel-1" role="region" aria-labelledby="it-trigger-1">
+              <div class="faq-item__panel-inner">
+                <p>You may look capable on the outside while privately feeling overwhelmed, disconnected, stuck in your own thoughts, hard on yourself, or carrying grief after a loss. You might also find that the same struggles keep showing up in your relationships, even when you understand where they come from.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="it-panel-2" id="it-trigger-2">
+              <span>Family-of-origin wounds and difficult relationship patterns</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="it-panel-2" role="region" aria-labelledby="it-trigger-2">
+              <div class="faq-item__panel-inner">
+                <p>You may know exactly where these patterns started and still find yourself people-pleasing, shutting down, feeling responsible for others, or repeating dynamics you thought you had outgrown.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="it-panel-3" id="it-trigger-3">
+              <span>Family, culture, and identity as an Asian or immigrant adult</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="it-panel-3" role="region" aria-labelledby="it-trigger-3">
+              <div class="faq-item__panel-inner">
+                <p>This might look like complicated relationships with parents, guilt around setting boundaries, pressure to meet family expectations, or trying to separate what you want from what you were taught you should want.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="it-panel-4" id="it-trigger-4">
+              <span>Fertility struggles, pregnancy loss, or reproductive trauma</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="it-panel-4" role="region" aria-labelledby="it-trigger-4">
+              <div class="faq-item__panel-inner">
+                <p>You may be carrying the emotional weight of trying to conceive, IVF or other fertility treatments, miscarriage or pregnancy loss, or a traumatic birth. The cycle of hope and disappointment can bring grief, anxiety, shame, or a sense of disconnection from your body&mdash;feelings that are hard to explain to others, even as you carry on with everyday life.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 — “What working together is like” -->
+    <section class="section it-spread it-spread--prose">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">Working together</span>
+          <h2 class="h-lg">What working together is like</h2>
+        </div>
+        <div class="reveal prose prose--centered">
+          <p class="lede lede--wide ink">Therapy with me isn&rsquo;t about handing you answers. It&rsquo;s a space to understand yourself more clearly, with curiosity instead of criticism, so the choices you make actually feel like your own.</p>
+          <p class="lede lede--wide">Some sessions slow down to make room for feelings you&rsquo;ve never felt able to express. Others focus on relationship patterns, family dynamics, perfectionism, or beliefs you&rsquo;ve carried for years without questioning them. And sometimes we turn insight into action &mdash; a boundary, a hard decision, or the next meaningful step forward.</p>
+          <p class="lede lede--wide">I hold compassion when you&rsquo;re hurting, and, when you&rsquo;re ready, a gentle challenge to what&rsquo;s no longer serving you. Always at your pace, never according to a script &mdash; because therapy should fit you, not the other way around.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA — the shared component; identical on every page -->
+    <section class="section--ink cta">
+      <div class="wrap">
+        <h2 class="cta__title">If this feels like the right place to begin, I&rsquo;d love to hear from you.</h2>
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="https://therapywithdongming.sessionshealth.com/request" target="_blank" rel="noopener noreferrer">Book a Free 15-Minute Consultation</a>
+        </div>
+        <p class="cta__email"><a href="mailto:therapywithdongming@gmail.com">therapywithdongming@gmail.com</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p>&copy; <span id="year"></span> Dongming Zhao, LCSW</p>
+      <ul class="site-footer__links">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/individual-therapy/">Individual Therapy</a></li>
+        <li><a href="/couples-therapy/">Couples Therapy</a></li>
+        <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+        <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

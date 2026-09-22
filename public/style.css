@@ -1,0 +1,2545 @@
+/* ==========================================================================
+   Dongming Zhao, LCSW — Editorial therapy site
+   Design tokens are derived directly from the approved hero photograph:
+   warm plaster cream, deep charcoal ink, and the terracotta of the CTA
+   button already present in the image. Nothing here invents a new palette.
+   ========================================================================== */
+
+:root {
+  /* Color — editorial palette (Aesop / Kinfolk-adjacent warm neutrals) */
+  --color-cream: #f6f0e8;         /* page background */
+  --color-cream-deep: #efe6d8;    /* section band background */
+  --color-ink: #2f2b28;           /* headline / body text */
+  --color-ink-soft: #6c645c;      /* secondary text */
+  --color-ink-faint: #948c81;     /* tertiary / meta text */
+  --color-terracotta: #8e6847;    /* CTA / accent */
+  --color-terracotta-dark: #74533a;
+  --color-rule: #c9a57c;          /* thin divider under headline */
+  --color-border: #ddd2c4;
+  --color-white: #fffdfa;
+
+  /* Type */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Scale */
+  --step-1: clamp(0.9rem, 0.86rem + 0.15vw, 1rem);
+  --step-2: clamp(1.05rem, 1rem + 0.2vw, 1.15rem);
+  --step-3: clamp(1.3rem, 1.15rem + 0.6vw, 1.6rem);
+  --step-4: clamp(1.9rem, 1.5rem + 1.6vw, 2.6rem);
+  --step-5: clamp(2.6rem, 1.9rem + 3vw, 4rem);
+
+  /* Layout */
+  --content-max: 1200px;
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+  --radius: 2px;
+  /* The single interval between the header and the first section of a page.
+     Every page reads this one value, so they all open on the same line. */
+  --space-top: clamp(2.5rem, 4.5vw, 4rem);
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration: 0.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration: 0.001s; }
+}
+
+/* Blog additions use the original typography, spacing, and palette. */
+.blog-hero h1 { max-width: 18ch; font-size: var(--step-5); }
+.blog-language { margin-top: 1.5rem; color: var(--color-terracotta-dark); }
+.blog-language a, .blog-card h2 a { text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+.blog-language a:hover, .blog-language a:focus-visible, .blog-card h2 a:hover, .blog-card h2 a:focus-visible { text-decoration: underline; }
+.blog-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4.5rem); }
+.blog-card { border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
+.blog-card h2 { font-size: var(--step-4); margin-bottom: 1rem; }
+.blog-card .btn { margin-top: 1.5rem; padding-inline: 0; }
+.blog-date { margin-bottom: 0.75rem; color: var(--color-ink-faint); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.blog-prose { max-width: 760px; }
+.blog-prose h1 { font-size: var(--step-5); }
+.blog-prose .prose { margin-top: 2.5rem; }
+.blog-prose .prose :is(h2, h3) { margin: 2.5rem 0 1rem; }
+.blog-prose .prose :is(p, ul, ol, blockquote) { margin: 0 0 1.35rem; }
+.blog-prose .prose a { color: var(--color-terracotta-dark); text-decoration: underline; text-underline-offset: 0.16em; }
+.blog-image { width: 100%; max-height: 520px; object-fit: cover; margin: 2rem 0; }
+@media (max-width: 720px) { .blog-list { grid-template-columns: 1fr; } }
+
+/* ---- Reset ------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-terracotta-dark);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-ink);
+  color: var(--color-white);
+  padding: 0.75rem 1.25rem;
+  z-index: 200;
+}
+
+.skip-link:focus {
+  left: var(--gutter);
+  top: var(--gutter);
+}
+
+/* ---- Layout helpers ----------------------------------------------------- */
+
+.wrap {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+}
+
+/* One opening interval for the whole site. The selector is deliberately
+   specific enough to beat the per-page paddings that used to set this, so the
+   value lives in exactly one place. The homepage is excluded: its first
+   section is a full-bleed photograph with the header laid over it, so there is
+   no gap there to set. */
+main > section:first-child:not(.hero) {
+  padding-top: var(--space-top);
+}
+
+.section--tight {
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.section--band {
+  background: var(--color-cream-deep);
+}
+
+.section--ink {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+.section--ink h2,
+.section--ink h3 {
+  color: var(--color-cream);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-terracotta-dark);
+  margin-bottom: 1rem;
+}
+
+.rule {
+  width: 64px;
+  height: 2px;
+  background: var(--color-rule);
+  border: none;
+  margin: 1.5rem 0;
+}
+
+.rule--center {
+  margin-inline: auto;
+}
+
+.lede {
+  font-size: var(--step-2);
+  color: var(--color-ink-soft);
+  max-width: 42ch;
+}
+
+.lede--wide {
+  max-width: 60ch;
+}
+
+.center {
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* ---- Buttons ------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0.9rem 1.9rem;
+  border-radius: var(--radius);
+  transition: transform var(--duration) var(--ease), background var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+  will-change: transform;
+}
+
+.btn--primary {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--color-terracotta-dark);
+  transform: translateY(-1px);
+}
+
+/* Pill: the site's accent brown and white text, fully rounded, with enough
+   horizontal room to read as deliberate rather than bulky. The line-height of
+   1 lets the padding do the centring, so the label sits on the optical middle
+   rather than low in the shape. */
+.btn--pill {
+  border-radius: 999px;
+  padding: 0.7rem 1.43rem;
+  font-size: 0.82rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.btn--ghost {
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
+}
+
+.btn--text {
+  padding: 0;
+  border-bottom: 1px solid var(--color-terracotta);
+  border-radius: 0;
+  color: var(--color-terracotta-dark);
+}
+
+.btn--text:hover,
+.btn--text:focus-visible {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--primary:hover { transform: none; }
+}
+
+/* ---- Header -------------------------------------------------------------- */
+
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.site-header--inset {
+  position: static;
+  background: var(--color-cream);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* The clear break between the brand and the start of the navigation. */
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.brand {
+  font-family: var(--font-display);
+  /* A touch larger than the display step, with the line-height wound back by
+     the same factor so the box height — and therefore the header height and
+     the vertical centring — stay exactly where they were. */
+  font-size: calc(var(--step-3) * 1.08);
+  line-height: 1.4815;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.site-header--inset .brand {
+  color: var(--color-ink);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 2.5vw, 2.75rem);
+  flex: 1;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  /* One compact group, anchored to the right edge so a single gap governs
+     every interval — including FAQ to Contact. The brand keeps its own,
+     deliberately larger break on the left. */
+  justify-content: flex-end;
+  gap: clamp(1.1rem, 2.2vw, 2.4rem);
+  list-style: none;
+  width: 100%;
+}
+
+.nav__links a {
+  font-size: 0.9375rem;
+  position: relative;
+  padding-bottom: 0.35rem;
+  white-space: nowrap;
+}
+
+/* The action is a pill, not an underlined link: it keeps its own symmetrical
+   padding instead of the link's underline offset. */
+.nav__links .btn--pill {
+  /* The label steps up with the rest of the navigation; the block padding
+     steps down by the same amount so the pill keeps its exact height and its
+     perfectly symmetrical inset. */
+  font-size: 0.9375rem;
+  padding-block: 0.669rem;
+}
+
+.nav__links .btn::after {
+  content: none;
+}
+
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transition: right var(--duration) var(--ease);
+}
+
+.nav__links a:hover::after,
+.nav__links a:focus-visible::after,
+.nav__links a[aria-current="page"]::after {
+  right: 0;
+}
+
+.nav__toggle {
+  display: none;
+  padding: 0.4rem;
+}
+
+.nav__toggle-icon,
+.nav__toggle-icon::before,
+.nav__toggle-icon::after {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform var(--duration) var(--ease), opacity var(--duration) var(--ease);
+}
+
+.nav__toggle-icon::before,
+.nav__toggle-icon::after {
+  content: "";
+  margin-top: 6px;
+}
+
+@media (max-width: 900px) {
+  .nav__toggle {
+    display: block;
+    /* The button's own 0.4rem of padding, pulled back, so the icon's right
+       edge lands on the content edge — the same line the brand's left edge
+       starts from. The tap target keeps its full size; only where it sits
+       changes. */
+    margin-right: -0.4rem;
+  }
+
+  /* The menu list is fixed-position on mobile, which takes it out of the flow
+     and leaves the toggle as the only thing laid out in .nav. With no
+     justification set it sat at the start of that box — directly after the
+     brand and its gap — which is why the icon appeared near the middle of the
+     header rather than at its right. */
+  .nav {
+    justify-content: flex-end;
+  }
+
+  .nav__links {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background: var(--color-cream);
+    transform: translateY(-100%);
+    transition: transform var(--duration) var(--ease);
+    z-index: 99;
+  }
+
+  .nav__links a {
+    font-size: var(--step-3);
+    font-family: var(--font-display);
+  }
+
+  .nav[data-open="true"] .nav__links {
+    transform: translateY(0);
+  }
+
+  .nav[data-open="true"] .nav__toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .nav[data-open="true"] .nav__toggle-icon::before {
+    opacity: 0;
+  }
+
+  .nav[data-open="true"] .nav__toggle-icon::after {
+    transform: translateY(-8px) rotate(-90deg);
+  }
+
+  /* In the stacked menu the action centres with everything else. */
+  .nav__action {
+    margin-left: 0;
+  }
+
+  .nav .btn--primary {
+    display: none;
+  }
+
+  .nav[data-open="true"] .btn--primary {
+    display: inline-flex;
+  }
+}
+
+/* ---- Hero (homepage only — the approved photograph) ---------------------
+   Three elements sit on the picture: the headline, one line of practical
+   information, and the consultation button. Nothing else, and no scrim or
+   overlay — the photograph is light enough throughout that the site's own ink
+   reads on it directly, which keeps the image the subject rather than a
+   darkened backdrop. */
+
+.hero {
+  position: relative;
+  /* The full visible viewport, so nothing of the next section shows at the
+     bottom of the screen on load. svh is the small viewport — the height with
+     a mobile browser's toolbars showing — which is the one that guarantees no
+     peek; vh above it is the fallback for browsers without svh. */
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--color-cream);
+  /* The header is laid over the photograph rather than sitting above it, so
+     the room it takes is added back here. The content then centres in what is
+     actually left of the viewport instead of against the whole of it — which
+     is what keeps it from sitting visibly low. The expression is the header's
+     own block padding, doubled, plus the brand's line box. */
+  padding-top: calc(2 * clamp(1.5rem, 3vw, 2.25rem) + 2.5625rem);
+}
+
+.hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 38% 50%;
+}
+
+/* One centred column on the page's middle axis. The measure is held well in
+   from the edges: a centred headline is read line by line from a moving left
+   edge, so a wide one is harder to follow than the same words ranged left. */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* The dominant element on the page. It steps down from the shared display
+   maximum because the sentence is a long one: at the full --step-5 it ran to
+   five lines and started to crowd the photograph it sits on. The lines are
+   evened out rather than filled, which centred type needs — filling leaves a
+   long line over a short one and the shape reads as a mistake. */
+.hero h1 {
+  font-size: clamp(2.05rem, 1.35rem + 2.35vw, 3.1rem);
+  line-height: 1.16;
+  text-wrap: balance;
+}
+
+/* One quiet line, well clear of the headline above it. */
+.hero__meta {
+  margin-top: clamp(2rem, 4vh, 2.75rem);
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: var(--color-ink-soft);
+}
+
+.hero__actions {
+  margin-top: 2.25rem;
+}
+
+@media (max-width: 700px) {
+  .hero__image {
+    object-position: 30% 42%;
+  }
+
+  .hero__content {
+    max-width: 100%;
+  }
+}
+
+/* ---- Page hero (inner pages, text-only, same system, no invented imagery) */
+
+.page-hero {
+  padding-block: clamp(6rem, 10vw, 8rem) clamp(3rem, 6vw, 4rem);
+}
+
+.page-hero h1 {
+  font-size: var(--step-5);
+  max-width: 20ch;
+}
+
+.page-hero__sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-ink);
+}
+
+/* ---- Quote list (homepage) ---------------------------------------------- */
+
+.quote-grid {
+  margin-top: 3.5rem;
+}
+
+.quote-row {
+  display: grid;
+  gap: 0;
+}
+
+.quote-row--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.quote-row--3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 78%;
+  margin-inline: auto;
+}
+
+.quote-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2.25rem 0;
+}
+
+.quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-ink);
+  text-align: center;
+  padding: 0 clamp(1rem, 2vw, 1.75rem);
+  border-left: 1px solid var(--color-border);
+}
+
+.quote-row > .quote:first-child {
+  border-left: none;
+}
+
+@media (max-width: 700px) {
+  .quote-row--4,
+  .quote-row--3 {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    gap: 1.75rem;
+  }
+
+  .quote {
+    border-left: none;
+    padding: 0 0 1.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .quote-row > .quote:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+/* ---- Pull quote ---------------------------------------------------------- */
+
+.pull-quote {
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-style: italic;
+  line-height: 1.3;
+  max-width: 26ch;
+  margin: 2.5rem 0;
+}
+
+.pull-quote span {
+  display: block;
+}
+
+/* ---- Two column ----------------------------------------------------------- */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Focus areas grid ------------------------------------------------------ */
+
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--color-border);
+  margin-top: 3.5rem;
+  border: 1px solid var(--color-border);
+}
+
+.focus-card {
+  background: var(--color-cream);
+  padding: clamp(2rem, 3vw, 2.75rem);
+  transition: background var(--duration) var(--ease);
+}
+
+.focus-card:hover {
+  background: var(--color-white);
+}
+
+.focus-card h3 {
+  font-size: var(--step-3);
+  margin-bottom: 0.75rem;
+}
+
+.focus-card p {
+  color: var(--color-ink-soft);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .focus-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .focus-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Outcomes list --------------------------------------------------------- */
+
+.outcomes {
+  list-style: none;
+  margin-top: 2.5rem;
+  columns: 2;
+  column-gap: 3rem;
+}
+
+.outcomes li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin-bottom: 1rem;
+  break-inside: avoid;
+  color: var(--color-ink-soft);
+}
+
+.outcomes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 1px;
+  background: var(--color-terracotta);
+}
+
+@media (max-width: 700px) {
+  .outcomes {
+    columns: 1;
+  }
+}
+
+/* ---- Credentials table ------------------------------------------------------ */
+
+.credentials {
+  margin-top: 3rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.credentials dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+
+.credentials .row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.credentials dt {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.credentials dd {
+  margin: 0;
+}
+
+.credentials ul {
+  list-style: none;
+}
+
+.credentials li {
+  margin-bottom: 0.35rem;
+}
+
+@media (max-width: 600px) {
+  .credentials .row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* ---- FAQ accordion ----------------------------------------------------------- */
+
+.faq-list {
+  margin-top: 3rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq-item__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+}
+
+.faq-item__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+
+.faq-item__icon::before,
+.faq-item__icon::after {
+  content: "";
+  position: absolute;
+  background: var(--color-terracotta-dark);
+  transition: transform var(--duration) var(--ease);
+}
+
+.faq-item__icon::before {
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+
+.faq-item__icon::after {
+  left: 50%;
+  top: 0;
+  width: 1.5px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.faq-item[data-open="true"] .faq-item__icon::after {
+  transform: translateX(-50%) rotate(90deg);
+  opacity: 0;
+}
+
+.faq-item__panel {
+  height: 0;
+  overflow: hidden;
+  transition: height var(--duration) var(--ease);
+}
+
+.faq-item__panel-inner {
+  padding-bottom: 1.75rem;
+  max-width: 60ch;
+  color: var(--color-ink-soft);
+}
+
+/* ---- Contact ------------------------------------------------------------------ */
+
+.contact-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: clamp(2rem, 4vw, 3rem);
+  margin-top: 3rem;
+}
+
+.contact-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.contact-detail:last-child {
+  border-bottom: none;
+}
+
+.contact-detail dt {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.contact-detail dd {
+  margin: 0;
+  font-size: var(--step-2);
+  font-family: var(--font-display);
+}
+
+/* ---- Closing CTA band -------------------------------------------------------- */
+
+.closing {
+  text-align: center;
+  padding-block: clamp(4rem, 9vw, 7rem);
+}
+
+.closing h2 {
+  font-size: var(--step-4);
+  max-width: 22ch;
+  margin-inline: auto;
+}
+
+.closing .lede {
+  margin-inline: auto;
+  margin-top: 1.25rem;
+}
+
+.closing .hero__actions {
+  margin-top: 2.25rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---- Closing CTA — one component, identical on every page ----------------
+   Headline, consultation button, and the email as a quiet third line. Nothing
+   else: no supporting paragraph, no second call to action.
+
+   The section is sized by its content. Earlier versions of this band carried a
+   viewport floor on three of the pages, which made the closing a screen of its
+   own; here the padding is the only thing setting the height, so the band is
+   as tall as the three elements need and the footer follows straight on.
+
+   Every page uses these rules and nothing page-specific, so the closing is the
+   same height, type, spacing and alignment throughout. */
+
+.cta {
+  padding-block: clamp(3.5rem, 6.5vw, 5rem);
+  text-align: center;
+}
+
+/* First in the hierarchy. It keeps the display face and the site's dark-band
+   cream (from .section--ink h2); the measure holds it to two lines, and the
+   lines are evened out rather than filled, which centred type needs. */
+.cta__title {
+  font-size: clamp(1.7rem, 1.25rem + 1.75vw, 2.3rem);
+  line-height: 1.3;
+  /* The measure is set so the sentence falls on two even lines rather than
+     three — a third line made the band noticeably taller for no gain. */
+  max-width: 38rem;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+/* Second. The button is the site's existing primary; only its interval above
+   is set here. It centres on the text-align rather than a flex rule, so the
+   button keeps exactly the shape it has everywhere else. */
+.cta__actions {
+  margin-top: clamp(1.75rem, 3vw, 2.35rem);
+}
+
+/* Third, and deliberately last in the eye's order: the body face at a small
+   step, in a warm grey that sits between the palette's faint ink and the
+   inverted body colour — dim enough to read as an alternative rather than a
+   second call to action, light enough to stay comfortably legible on the dark
+   band. The underline appears only on hover, so at rest it is a line of text
+   rather than a button. */
+.cta__email {
+  margin-top: clamp(1.15rem, 2vw, 1.5rem);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+}
+
+.cta__email a {
+  color: #b8afa2;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+
+.cta__email a:hover,
+.cta__email a:focus-visible {
+  color: var(--color-cream);
+  border-bottom-color: currentColor;
+}
+
+/* The Chinese page uses this component unchanged. The one addition is the
+   clause break in its headline: the two halves are set as inline blocks so the
+   line turns after the comma and never leaves a single character stranded,
+   which Latin word-wrapping rules cannot do for Chinese. */
+/* The Chinese headline is the shared component's heading with three changes,
+   all of them script rather than design: the CJK face, a little letter-spacing
+   to open up the Han glyphs, and a measure narrow enough that the two clauses
+   take a line each. Everything else — size, leading, colour, the block's
+   height, and therefore the whole band's height — comes from .cta__title, so
+   this page matches the English pages by using the same rules, not by being
+   padded to fit them. */
+.page-zhongwen .cta__title {
+  font-family: var(--font-zh-display);
+  letter-spacing: 0.02em;
+  max-width: 13em;
+}
+
+/* Each clause is its own inline block, so the line turns after the comma and
+   never mid-phrase — Latin word-wrapping has no word boundaries to work with
+   in Chinese and would otherwise break wherever the measure happens to run
+   out. */
+.page-zhongwen .cta__title span {
+  display: inline-block;
+}
+
+/* ---- Footer -------------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding-block: 3rem;
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-ink-faint);
+}
+
+.site-footer__links {
+  display: flex;
+  /* The row wraps rather than running past the edge. With six items the list
+     is wider than a narrow phone, and the sixth was pushing it off-screen;
+     wrapping lets the links fall onto a second line at their own size instead
+     of being squeezed. The interval is the footer's existing one, so wrapped
+     rows are spaced the same as everything else here. */
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+/* ---- Scroll reveal --------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Meet section (with figure placeholder-free layout) --------------------------- */
+
+.meet {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .meet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.meet__name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-3);
+}
+
+/* ---- Prose block: consistent paragraph rhythm without inline styles ------- */
+
+.prose > p + p {
+  margin-top: 1.25rem;
+}
+
+.prose--invert p {
+  color: #cfc7ba;
+}
+
+/* ---- Heading utilities tied to the display scale --------------------------- */
+
+.h-xl {
+  font-size: var(--step-5);
+}
+
+.h-lg {
+  font-size: var(--step-4);
+}
+
+.h-lg--narrow {
+  max-width: 20ch;
+}
+
+/* ---- Statement (homepage opening line under the hero) ---------------------- */
+
+.statement {
+  text-align: center;
+}
+
+.statement h2 {
+  max-width: 26ch;
+  margin-inline: auto;
+}
+
+.statement__lead {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-3);
+  color: var(--color-terracotta);
+  margin-top: 0.75rem;
+}
+
+.statement__lead--accent {
+  color: var(--color-terracotta);
+}
+
+/* ---- Section heading with constrained measure ------------------------------- */
+
+.section-heading {
+  max-width: 18ch;
+}
+
+.section-heading--wide {
+  max-width: 40ch;
+}
+
+.ink {
+  color: var(--color-ink);
+}
+
+.closing-line {
+  margin-top: 3rem;
+}
+
+.meet__cta {
+  margin-top: 1.75rem;
+  display: inline-block;
+}
+
+.prose--measure {
+  max-width: 60ch;
+}
+
+.prose--centered {
+  max-width: 68ch;
+  margin-inline: auto;
+  margin-top: 2.5rem;
+}
+
+/* ==========================================================================
+   Individual & Couples Therapy — shared page rhythm & section composition
+   The two pages are deliberate sister layouts, so one rule set drives both
+   and neither can drift out of step with the other. The FAQ page borrows two
+   pieces of this set — the heading-group convention and the accordion — so
+   its rows are the same component rather than a second version of it. Every rule below is
+   scoped to body.page-individual and body.page-couples (and, where a section
+   needs its own treatment, to an .it-spread--* class that exists only on
+   this page), so no other page in the site can be affected.
+   No new components, colors, fonts, copy or sections are introduced here —
+   only height, alignment, measure and spacing.
+   ========================================================================== */
+
+/* ---- Section scaffolding ------------------------------------------------
+   Each major section becomes a flex column so its composition can be
+   distributed vertically inside a deliberate minimum height. Heights are
+   enforced only on wide, reasonably tall windows; below that, natural
+   document flow is left alone (see the tablet/mobile note at the end). */
+
+.page-individual .it-spread,
+.page-couples .it-spread {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* .wrap carries margin-inline: auto, and an auto cross-axis margin on a flex
+   child suppresses the default stretch — which would shrink-wrap each section's
+   container and pull its content off the site's left/centre alignment. An
+   explicit full width restores the original horizontal composition exactly;
+   .wrap's own max-width still governs the measure. */
+.page-individual .it-spread > .wrap,
+.page-couples .it-spread > .wrap {
+  width: 100%;
+}
+
+@media (min-width: 901px) and (min-height: 620px) {
+  /* Short and mid-length sections: a full viewport floor, so the section
+     that follows never peeks in at the bottom. Content still decides the
+     real height — anything taller than the floor simply grows. */
+  .page-individual .it-spread,
+  .page-couples .it-spread {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  /* Opening section: the first screen is header + this section, so it takes
+     the viewport minus a header allowance. The allowance is deliberately
+     smaller than the header itself, which errs toward the section running a
+     few pixels past the fold rather than letting the next band show. */
+  .page-individual .it-spread--quotes,
+  .page-couples .it-spread--quotes {
+    min-height: calc(100vh - 5.5rem);
+    min-height: calc(100svh - 5.5rem);
+  }
+
+  /* Top-aligned: centring a short block in a full-height section is what
+     pushed this opening low. The interval itself now comes from --space-top,
+     which every page shares, so the bespoke formula that used to reproduce
+     the About page's opening here is no longer needed. */
+  .page-individual .it-spread--quotes,
+  .page-couples .it-spread--quotes {
+    justify-content: flex-start;
+  }
+
+  /* Long-copy section: content genuinely sets the height here, so this is a
+     floor rather than a target — it grows past a screen when it needs to.
+     The extra bottom padding is the space taken off the heading-to-body
+     interval below, added back so the heading itself does not move. */
+  .page-individual .it-spread--prose,
+  .page-couples .it-spread--prose {
+    padding-block: clamp(4.5rem, 10vh, 8.5rem)
+                   calc(clamp(4.5rem, 10vh, 8.5rem) + clamp(1rem, 1.8vh, 1.25rem));
+  }
+
+  .page-individual .it-spread--prose .prose--centered,
+  .page-couples .it-spread--prose .prose--centered {
+    margin-top: clamp(2.5rem, 4.7vh, 3.75rem);
+  }
+
+  /* Closing CTA: the dark band plus the footer make the final screen, so the
+     band takes the viewport minus roughly the footer's height. */
+  .page-individual .it-spread--close,
+  .page-couples .it-spread--close {
+    min-height: calc(100vh - 7.5rem);
+    min-height: calc(100svh - 7.5rem);
+  }
+}
+
+/* Section heading groups: the block itself is centred on the page while its
+   contents stay left-aligned, so the eyebrow starts on the same vertical line
+   as the first letter of the heading instead of being centred on its own.
+   Type, colour and the eyebrow-to-heading interval are the site's defaults. */
+.page-individual .it-head,
+.page-couples .it-head,
+.page-contact .it-head,
+.page-faq .it-head {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  text-align: left;
+}
+
+/* Exception: the accordion rows below this one heading are anchored to the
+   content edge rather than centred, so the heading group drops its auto
+   margins and starts on that same line — eyebrow, heading and rows all share
+   one left edge and the section reads as a single composition. */
+.page-individual .it-spread--fit .it-head {
+  margin-inline: 0;
+}
+
+/* ---- 1 · “Sound familiar?” ---------------------------------------------
+   Heading and quote group separated enough to read as one full spread. Air
+   is added inside each quote rather than between them, so the thin vertical
+   accent rule stays continuous. */
+
+.page-individual .it-spread--quotes .quote-grid,
+.page-couples .it-spread--quotes .quote-grid {
+  margin-top: clamp(3.5rem, 7vh, 6rem);
+}
+
+/* The quote group is narrower than the measure and centred in the section,
+   so the five lines read as one block rather than a left-hung column. */
+@media (min-width: 901px) {
+  .page-individual .it-spread--quotes .quote-grid,
+  .page-couples .it-spread--quotes .quote-grid {
+    max-width: 76%;
+    margin-inline: auto;
+  }
+
+  /* The heading is a single line at this width; the shared 18ch cap would
+     break it over two. */
+  .page-individual .it-spread--quotes .section-heading,
+  .page-couples .it-spread--quotes .section-heading {
+    max-width: none;
+  }
+}
+
+/* A step up in scale: these are the words a reader is meant to recognise
+   themselves in, so they carry more weight than a supporting quote would.
+   Family, style and colour are the site's existing quote treatment; the
+   vertical accent rule the homepage uses is dropped here. */
+.page-individual .quote,
+.page-couples .quote {
+  font-size: var(--step-3);
+  line-height: 1.5;
+  padding-inline: clamp(1.25rem, 2.4vw, 2.25rem);
+  padding-block: clamp(0.55rem, 1.15vh, 1.05rem);
+  border-left: none;
+}
+
+/* ---- 2 · “We may be a good fit if…” ------------------------------------
+   Four quiet rows under the heading. Descriptions stay closed until a row is
+   chosen; the accordion reuses the site's existing .faq-item component and
+   its existing JavaScript, with only the marker restyled, scoped here. */
+
+.page-individual .it-rows,
+.page-couples .it-rows,
+.page-faq .it-rows {
+  margin-top: clamp(3rem, 6.5vh, 5rem);
+  max-width: 60rem;
+}
+
+.page-individual .it-rows .faq-item__trigger,
+.page-couples .it-rows .faq-item__trigger,
+.page-faq .it-rows .faq-item__trigger {
+  padding-block: clamp(1.4rem, 2.6vh, 1.9rem);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: flex-start;
+  line-height: 1.3;
+}
+
+.page-individual .it-rows .faq-item__trigger > span:first-child,
+.page-couples .it-rows .faq-item__trigger > span:first-child,
+.page-faq .it-rows .faq-item__trigger > span:first-child {
+  max-width: 46ch;
+}
+
+.page-individual .it-rows .faq-item__trigger:hover > span:first-child,
+.page-couples .it-rows .faq-item__trigger:hover > span:first-child,
+.page-faq .it-rows .faq-item__trigger:hover > span:first-child,
+.page-individual .it-rows .faq-item__trigger:focus-visible > span:first-child,
+.page-couples .it-rows .faq-item__trigger:focus-visible > span:first-child,
+.page-faq .it-rows .faq-item__trigger:focus-visible > span:first-child {
+  color: var(--color-terracotta-dark);
+}
+
+/* The open row is marked by color rather than by a box. */
+.page-individual .it-rows .faq-item[data-open="true"] .faq-item__trigger > span:first-child,
+.page-couples .it-rows .faq-item[data-open="true"] .faq-item__trigger > span:first-child,
+.page-faq .it-rows .faq-item[data-open="true"] .faq-item__trigger > span:first-child {
+  color: var(--color-terracotta-dark);
+}
+
+.page-individual .it-rows .faq-item__panel-inner,
+.page-couples .it-rows .faq-item__panel-inner,
+.page-faq .it-rows .faq-item__panel-inner {
+  padding-bottom: clamp(1.5rem, 3vh, 2.25rem);
+  max-width: 62ch;
+}
+
+/* Marker: a small chevron rather than the plus used elsewhere on the site.
+   Built from the same two pseudo-elements, so no new element is introduced. */
+
+.page-individual .it-rows .faq-item__icon,
+.page-couples .it-rows .faq-item__icon,
+.page-faq .it-rows .faq-item__icon {
+  width: 16px;
+  height: 16px;
+  margin-top: 0.35em;
+  transition: transform var(--duration) var(--ease);
+}
+
+.page-individual .it-rows .faq-item__icon::before,
+.page-couples .it-rows .faq-item__icon::before,
+.page-faq .it-rows .faq-item__icon::before,
+.page-individual .it-rows .faq-item__icon::after,
+.page-couples .it-rows .faq-item__icon::after,
+.page-faq .it-rows .faq-item__icon::after {
+  top: 50%;
+  width: 10px;
+  height: 1.2px;
+  background: var(--color-terracotta-dark);
+}
+
+.page-individual .it-rows .faq-item__icon::before,
+.page-couples .it-rows .faq-item__icon::before,
+.page-faq .it-rows .faq-item__icon::before {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+.page-individual .it-rows .faq-item__icon::after,
+.page-couples .it-rows .faq-item__icon::after,
+.page-faq .it-rows .faq-item__icon::after {
+  left: auto;
+  right: 0;
+  height: 1.2px;
+  transform: rotate(-45deg);
+  transform-origin: right center;
+}
+
+.page-individual .it-rows .faq-item[data-open="true"] .faq-item__icon,
+.page-couples .it-rows .faq-item[data-open="true"] .faq-item__icon,
+.page-faq .it-rows .faq-item[data-open="true"] .faq-item__icon {
+  transform: rotate(180deg);
+}
+
+.page-individual .it-rows .faq-item[data-open="true"] .faq-item__icon::after,
+.page-couples .it-rows .faq-item[data-open="true"] .faq-item__icon::after,
+.page-faq .it-rows .faq-item[data-open="true"] .faq-item__icon::after {
+  transform: rotate(-45deg);
+  opacity: 1;
+}
+
+/* ---- 3 · “What working together is like” -------------------------------
+   Heading given room to breathe; paragraph rhythm loosened slightly. The
+   text column keeps its existing readable width. */
+
+/* A measure narrow enough that the column never begins left of the heading
+   above it. At 68ch the box was wider than the headings and, because the copy
+   is ragged right, its ink sat well left of the axis the two boxes share — so
+   the block read as pushed left even though both were centred to the pixel. */
+.page-individual .prose--centered,
+.page-couples .prose--centered {
+  max-width: 56ch;
+  margin-top: clamp(3.5rem, 6.5vh, 5rem);
+}
+
+.page-individual .prose--centered > p + p,
+.page-couples .prose--centered > p + p {
+  margin-top: 1.9rem;
+}
+
+/* Body copy set ~6% smaller than the shared lede size, to open up a little
+   more hierarchy under the large serif heading. Line-height nudged up to keep
+   the shorter measure-per-line just as comfortable to read. */
+@media (min-width: 701px) {
+  .page-individual .it-spread--prose .prose--centered .lede,
+  .page-couples .it-spread--prose .prose--centered .lede {
+    font-size: calc(var(--step-2) * 0.94);
+    line-height: 1.65;
+  }
+}
+
+/* One weight across the three paragraphs: the second and third match the
+   first rather than dropping to the muted secondary ink. */
+.page-individual .it-spread--prose .prose--centered .lede,
+.page-couples .it-spread--prose .prose--centered .lede {
+  color: var(--color-ink);
+}
+
+/* ---- Tablet & mobile ---------------------------------------------------
+   No forced section heights below 901px: vertical flow is natural and the
+   viewport-relative intervals collapse to their smaller values. These
+   overrides keep the added spacing from becoming excessive and preserve the
+   existing stacked quote treatment exactly as it was. */
+
+@media (max-width: 900px) {
+  .page-individual .it-spread--prose,
+  .page-couples .it-spread--prose {
+    padding-block: clamp(4rem, 9vw, 7.5rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .page-individual .quote,
+  .page-couples .quote {
+    padding: 0 0 1.75rem;
+  }
+
+  .page-individual .it-rows .faq-item__trigger,
+  .page-couples .it-rows .faq-item__trigger,
+  .page-faq .it-rows .faq-item__trigger {
+    font-size: var(--step-2);
+  }
+}
+
+/* ---- Couples page only --------------------------------------------------
+   The relationship-patterns section stands where the accordion stands on the
+   Individual page, so its copy takes that section's larger interval under the
+   heading rather than the tighter one the prose sections use. Type and colour
+   match the prose sections exactly. */
+
+.page-couples .it-spread--fit .prose--centered {
+  margin-top: clamp(3rem, 6.5vh, 5rem);
+}
+
+.page-couples .it-spread--fit .prose--centered .lede {
+  color: var(--color-ink);
+}
+
+@media (min-width: 701px) {
+  .page-couples .it-spread--fit .prose--centered .lede {
+    font-size: calc(var(--step-2) * 0.94);
+    line-height: 1.65;
+  }
+}
+
+/* ==========================================================================
+   Contact page — alignment and viewport behaviour
+   Scoped to body.page-contact. Type, colour, the card, the button and the
+   copy are all untouched; only where things sit changes.
+   ========================================================================== */
+
+/* The page reads as one continuous column rather than two screens: the
+   opening takes only the height its content needs, and the interval below it
+   is set here instead of being whatever a viewport floor left over. The
+   shared .section padding underneath adds the rest, and the background stays
+   cream throughout, so the consultation follows on without a hard break. */
+.page-contact .page-hero {
+  padding-bottom: 0;
+}
+
+/* The consultation sits much closer than the site's standard section interval
+   would put it — the two halves of this page belong together, so the break
+   between them is a pause rather than a full section change. */
+.page-contact main > section + section {
+  padding-top: clamp(1.75rem, 3.5vw, 3.25rem);
+}
+
+/* The opening sits on the content edge, the same line the consultation column
+   below it starts from, rather than centring as a block the way the shared
+   .it-head rule would. The eyebrow, both headline lines and the rule keep
+   their one left edge. */
+.page-contact .page-hero .it-head {
+  margin-inline: 0;
+}
+
+/* Only the button centres in its column; the heading and paragraph above it
+   stay left-aligned. The cap is the paragraph's own line length: its box
+   fills the column but its text does not, so centring on the box left the
+   button sitting right of where the sentences actually end. Centring inside
+   this narrower box puts it on the text's visual middle instead. Where the
+   column is narrower than this, the cap simply does not bite. */
+.page-contact .split .hero__actions {
+  display: flex;
+  justify-content: center;
+  max-width: 35.75rem;
+}
+
+/* The headline is set as two clauses. On the wide layout each is its own
+   line, so the break falls after the comma and nowhere else — and the group's
+   own width becomes the width of the longer line, which is what lets the
+   shared .it-head rule centre the block while the eyebrow sits on the
+   headline's left edge. The scale steps down enough for the first clause to
+   hold one line with room to spare. */
+.page-contact .page-hero h1 {
+  font-size: clamp(2.2rem, 4.6vw, 3.5rem);
+  max-width: none;
+}
+
+@media (min-width: 901px) {
+  .page-contact .page-hero h1 span {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 901px) {
+  /* The consultation column takes a larger share so its heading can hold one
+     line. Neither this nor the type step below does it alone; together they
+     are the smallest pair of changes that works. */
+  .page-contact .split {
+    /* Both tracks are pinned rather than left as bare fr. An fr track keeps
+       an automatic min-content floor, so the card's long email address would
+       quietly widen its column and steal the width the heading needs to hold
+       its line. The card gets an explicit floor instead of an implicit one,
+       so it can neither inflate past its share nor collapse below the width
+       its rows need to stay on one line each. */
+    grid-template-columns: minmax(0, 1.2fr) minmax(23rem, 0.8fr);
+  }
+}
+
+@media (max-width: 900px) {
+  /* The pair stacks a hundred pixels earlier than the shared component does.
+     Between 801 and 900 the two columns were only ~340px each — too narrow
+     for the heading to hold its line, and cramped for the card beside it. One
+     full-width column reads better there, and it puts the stack on the same
+     900px line the navigation and the section floors already use. */
+  .page-contact .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.page-contact .split h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+}
+
+/* Room to breathe under the heading, which previously sat flush on the copy. */
+.page-contact .split .lede {
+  margin-top: clamp(1.25rem, 2.5vh, 1.75rem);
+}
+
+/* A quiet line of practical information sitting between the paragraph and the
+   button: the site's body face one step down, in the softer ink, so it reads
+   as a footnote to the sentence above rather than as a second statement. It
+   keeps the paragraph's left edge and its measure, and the button below keeps
+   its own spacing and centring untouched. */
+.page-contact .ct-note {
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  max-width: 60ch;
+  margin-top: clamp(1.15rem, 2.2vh, 1.5rem);
+}
+
+/* The card sat 3rem below the column it shares a row with; both now begin on
+   the same line. */
+.page-contact .contact-card {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   FAQ page — a practical page: facts in the open, questions behind a control
+   Scoped to body.page-faq. The accordion, the eyebrow, the body copy, the
+   rules and the closing band are all existing components; only the rates
+   block below is new, and it is built from type and hairlines rather than
+   from cards. Sections take the height their content needs — no viewport
+   floors here, since nothing on this page is a composition to be framed.
+   ========================================================================== */
+
+/* Both heading groups take the site's shared .it-head treatment untouched —
+   the group centred as a block, its eyebrow and heading on one left edge —
+   exactly as on the Individual and Couples Therapy pages. The rule that used
+   to centre each line independently has been removed rather than replaced.
+
+   The facts share the accordion's measure, so the two sections line up. */
+.page-faq .fq-facts {
+  max-width: 60rem;
+  margin-inline: auto;
+  margin-top: clamp(3rem, 6.5vh, 5rem);
+  text-align: center;
+}
+
+/* The labels above stay on the centre line, but sentences are read rather
+   than scanned: the box is centred on the page while the text inside it is
+   left-aligned against a controlled measure. */
+.page-faq .fq-note .lede {
+  margin-inline: auto;
+  text-align: left;
+}
+
+/* The questions section only: the heading block takes the accordion's own
+   measure instead of shrinking to its text, so it is centred on exactly the
+   same span as the rows and its left edge is their left edge. The eyebrow and
+   the heading keep the shared left-aligned treatment; only the box they sit
+   in changes width. */
+.page-faq .section--band .it-head {
+  width: 100%;
+  max-width: 60rem;
+}
+
+/* The accordion is centred as a block. Its rows stay left-aligned inside it,
+   which is what keeps a question and its answer easy to read. */
+.page-faq .it-rows {
+  margin-inline: auto;
+}
+
+/* The two rates share a row and a hairline, which is what makes them read as
+   a pair and keeps them easy to compare at a glance. */
+.page-faq .fq-rates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 4rem);
+  padding-bottom: clamp(2.25rem, 4.5vh, 3.25rem);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-faq .fq-note {
+  padding-block: clamp(2.25rem, 4.5vh, 3.25rem);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-faq .fq-note:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* The same small-caps label the site uses for eyebrows, so these read as one
+   family of labels rather than a new kind of heading. */
+.page-faq .fq-label {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-terracotta-dark);
+  margin-bottom: 0.75rem;
+}
+
+/* The figure itself is the thing being scanned, so it carries the display
+   face at the same step the accordion questions use. */
+.page-faq .fq-rate__detail {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.page-faq .fq-note .lede {
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  /* Stacked, with the hairline between them so each rate still reads as its
+     own entry rather than as two loose lines. */
+  .page-faq .fq-rates {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .page-faq .fq-rates .fq-rate + .fq-rate {
+    padding-top: clamp(1.5rem, 4vw, 2rem);
+    margin-top: clamp(1.5rem, 4vw, 2rem);
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+/* ==========================================================================
+   Chinese page — the same design system, retuned for Chinese reading
+   Scoped to body.page-zhongwen throughout, so no English page is affected.
+   Chinese glyphs are denser and squarer than Latin ones: they need a little
+   more size, noticeably more leading, and a measure counted in characters
+   rather than in ch units (a ch is the width of "0", not of a Han glyph).
+   Everything else — palette, rules, buttons, header, footer, reveal — is the
+   site's existing furniture, reused rather than restyled.
+   ========================================================================== */
+
+.page-zhongwen {
+  /* Latin first in each stack, so numerals, LCSW and IFS/EFT/ACT/CBT keep the
+     site's own faces and only Han glyphs fall through to a system CJK font. */
+  --font-zh-body: "Inter", "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC",
+                  "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-zh-display: "Cormorant Garamond", "Songti SC", "Source Han Serif SC",
+                     "Noto Serif SC", "SimSun", serif;
+  /* Slightly larger than the English body: 18px at desktop reads as the same
+     optical weight as 15px of Inter. */
+  --zh-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  /* One comfortable Chinese line is roughly 32–36 characters; 1em is exactly
+     one Han glyph, so the measure is stated in em, not ch. */
+  --zh-measure: 34em;
+}
+
+/* ---- Body copy ---------------------------------------------------------- */
+
+.page-zhongwen .zh-lede {
+  font-family: var(--font-zh-body);
+  font-size: var(--zh-body);
+  /* Generous leading is what makes dense Han text breathe; 1.6 (the English
+     body value) crowds it badly. */
+  line-height: 1.95;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-soft);
+  max-width: var(--zh-measure);
+  margin: 0;
+  /* Keeps the renderer from stranding a single character on the last line
+     where it can manage it; harmless where unsupported. */
+  text-wrap: pretty;
+}
+
+.page-zhongwen .zh-lede + .zh-lede {
+  margin-top: 1.6em;
+}
+
+/* ---- 1 · Introduction ---------------------------------------------------
+   A small portrait against the copy, not a hero image: the column is fixed
+   and deliberately narrow, and the photograph simply fills it. */
+
+@media (min-width: 901px) and (min-height: 620px) {
+  /* A floor, never a target: on a tall window the introduction alone is
+     shorter than the screen and the band below it would show as a strip at
+     the fold. The allowance is smaller than the header, so the section errs a
+     few pixels past the fold instead. Wherever the copy is taller than this
+     — which is most desktop sizes — the content decides and nothing here
+     applies. The rest of the page is left to flow at its natural height. */
+  .page-zhongwen .zh-intro-section {
+    min-height: calc(100vh - 5.5rem);
+    min-height: calc(100svh - 5.5rem);
+  }
+}
+
+.page-zhongwen .zh-intro {
+  /* Wide enough that the copy column reaches a full Chinese measure once the
+     portrait and the gap are taken out of it. */
+  max-width: 62rem;
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.page-zhongwen .zh-portrait {
+  margin: 0;
+  background: var(--color-cream-deep);
+}
+
+/* The photograph is shown whole: the column sets the width and the height
+   simply follows from the file's own proportions, so nothing is cropped and
+   nothing is stretched. The width/height attributes on the tag give the
+   browser the ratio up front, so the space is reserved before it loads. */
+.page-zhongwen .zh-portrait img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* The opening line sits at body scale, as asked — it is marked only by the
+   full ink colour and a hair more tracking, never by size. */
+.page-zhongwen .zh-greeting {
+  color: var(--color-ink);
+  letter-spacing: 0.04em;
+}
+
+/* ---- 2 · 擅长方向 --------------------------------------------------------
+   One centred column holding the heading and all five entries, with the copy
+   left-aligned inside it. Identical treatment for every entry: the rhythm
+   comes from the numerals, the rules and the space, not from variation. */
+
+.page-zhongwen .zh-column {
+  /* The number gutter plus one full measure, so the block sits centred on the
+     page while every line of text starts on the same left edge. */
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.page-zhongwen .zh-h2 {
+  font-family: var(--font-zh-display);
+  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.375rem);
+  font-weight: 500;
+  /* Open tracking gives a four-character heading the poise the English serif
+     headings get from their word spacing. */
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  color: var(--color-ink);
+  margin: 0 0 clamp(2.5rem, 5vh, 3.75rem);
+}
+
+.page-zhongwen .zh-item {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  column-gap: clamp(1.25rem, 2.5vw, 2rem);
+  padding-block: clamp(2.75rem, 5.5vh, 4rem);
+  border-top: 1px solid var(--color-border);
+}
+
+.page-zhongwen .zh-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.page-zhongwen .zh-item:last-child {
+  padding-bottom: 0;
+}
+
+/* The numeral is an anchor, not an ornament: the site's display face, the
+   warm tan of the divider rule, and no larger than the title it sits beside. */
+.page-zhongwen .zh-item__num {
+  font-family: var(--font-zh-display);
+  font-size: 1.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  color: var(--color-rule);
+  margin: 0;
+}
+
+.page-zhongwen .zh-item__title {
+  font-family: var(--font-zh-display);
+  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  color: var(--color-ink);
+  margin: 0 0 clamp(1.1rem, 2.2vh, 1.6rem);
+  max-width: var(--zh-measure);
+}
+
+/* ---- 3 · Closing --------------------------------------------------------
+   The English closing band exactly: same ink field, same centring, same
+   button. Only the type is retuned for Chinese. */
+
+.page-zhongwen .zh-closing__title {
+  font-family: var(--font-zh-display);
+  font-size: clamp(1.6rem, 1.25rem + 1.35vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.65;
+  max-width: 22em;
+  margin-inline: auto;
+}
+
+/* The line is held in two clauses so that when it does have to wrap — on a
+   narrow screen — it breaks after the comma, where the sentence itself
+   breaks, instead of stranding the last character or two on a line of their
+   own. On a wide screen the two sit together as one line. */
+.page-zhongwen .zh-closing__title span {
+  display: inline-block;
+}
+
+.page-zhongwen .zh-closing__sub {
+  color: #cfc7ba;
+  max-width: none;
+  margin-top: 1.5rem;
+  margin-inline: auto;
+}
+
+.page-zhongwen .zh-closing .btn {
+  font-family: var(--font-zh-body);
+  letter-spacing: 0.06em;
+}
+
+/* ---- Tablet & mobile ---------------------------------------------------- */
+
+@media (max-width: 860px) {
+  /* The portrait stacks above the copy and stays modest rather than
+     stretching to the full width of the screen. */
+  .page-zhongwen .zh-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 2.75rem);
+  }
+
+  .page-zhongwen .zh-portrait {
+    width: min(11rem, 45%);
+  }
+
+}
+
+@media (max-width: 600px) {
+  /* The numeral moves above the title instead of holding a column of its
+     own, so it never eats into the reading width. */
+  .page-zhongwen .zh-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-zhongwen .zh-item__num {
+    font-size: 1.25rem;
+    margin-bottom: 0.65rem;
+  }
+}
+
+/* ==========================================================================
+   About page — photography-led opening, quiet pacing, expandable positioning
+   Every rule below is scoped to body.page-about (and to .ab-* classes that
+   exist only on this page), so no other page in the site can be affected.
+   ========================================================================== */
+
+/* ---- Section scaffolding ------------------------------------------------ */
+
+.page-about .ab-spread {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* .wrap carries margin-inline: auto, and an auto cross-axis margin on a flex
+   child suppresses the default stretch, which would pull each section's
+   container off the site's alignment. */
+.page-about .ab-spread > .wrap {
+  width: 100%;
+}
+
+@media (min-width: 901px) and (min-height: 620px) {
+  /* Opening: viewport minus a header allowance. The allowance is smaller than
+     the header itself, so the photograph runs a few pixels past the fold
+     rather than letting the next band show at the bottom of the first screen. */
+  /* The header is static and in flow, so the hero takes the viewport minus a
+     header allowance built from the header's own values: its vertical padding
+     plus the two-line brand. Three pixels are shaved off the allowance so the
+     hero errs a hair past the fold rather than exposing the section below. */
+  .page-about .ab-spread--hero {
+    min-height: calc(100vh - 5.5rem);
+    min-height: calc(100svh - 5.5rem);
+    /* Top-aligned, so the opening interval is exactly --space-top and does
+       not gain a share of the centring slack on a tall window. */
+    justify-content: flex-start;
+  }
+
+  /* The short introduction and the personal section are deliberately light on
+     copy, so their compositions are weighted above centre — the space reads as
+     intentional rather than as a block stranded mid-screen. */
+  .page-about .ab-spread--personal {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-block: clamp(4rem, 9vh, 7rem) clamp(5rem, 12vh, 8.5rem);
+  }
+
+  /* Closing: the dark band plus the footer make the final screen. */
+  .page-about .ab-spread--close {
+    min-height: calc(100vh - 7.5rem);
+    min-height: calc(100svh - 7.5rem);
+  }
+}
+
+/* ---- 1 · Opening spread -------------------------------------------------
+   Very little copy against a photograph that runs the full height of the
+   screen and bleeds off the right edge. The text column starts on the site's
+   normal content line, so the page still reads as part of the same grid. */
+
+/* Only the closing interval is set here; the opening one is --space-top. */
+.page-about .ab-hero-section {
+  padding-bottom: clamp(4.5rem, 10vh, 8rem);
+}
+
+/* ---- 1 · Professional introduction ------------------------------------
+   An editorial About opening rather than a split-screen hero: text and
+   portrait sit inside the site's centred content container, with generous
+   margins on both sides and generous air above, below and between them.
+   The portrait is a restrained editorial plate, not a full-height panel. */
+
+.page-about .ab-hero {
+  /* The composition uses the site's full content container, so the page is
+     used the way the reference does: smaller outer margins, and the width
+     freed on both sides goes to the photograph rather than to empty space.
+     The text column keeps the exact width its measure needs, so the type does
+     not move or rewrap. */
+  display: grid;
+  /* The text column is held to just the width its measure needs (its floor),
+     and the freed space goes to the photograph and to a tighter gutter — so
+     the type does not move or rewrap, the photograph returns to its larger
+     size, and the two columns read as one composition rather than two blocks
+     with a gulf between them. */
+  grid-template-columns: 27.5rem 1fr;
+  gap: clamp(1.75rem, 3vw, 2.75rem);
+  align-items: center;
+}
+
+/* Both columns step inward by the same amount, closing the channel between
+   them while the composition stays centred: the text starts a little further
+   right, and the photograph — right-aligned in its column — ends a little
+   further left. Neither column's own width changes, and the plate keeps its
+   size, crop and vertical position. */
+@media (min-width: 1101px) {
+  .page-about .ab-hero {
+    padding-inline: calc(var(--gutter) + clamp(1rem, 2.7vw, 2.45rem));
+  }
+}
+
+.page-about .ab-hero__text {
+  padding-block: clamp(1rem, 2vh, 2rem);
+}
+
+/* Large and elegant, but no longer dominating the section. */
+.page-about .ab-hero h1 {
+  font-size: calc(var(--step-5) * 0.85);
+  max-width: 11ch;
+}
+
+/* Wider intervals around the divider so the heading and the introduction
+   read as two separate movements. */
+.page-about .ab-hero .rule {
+  margin: clamp(2rem, 4vh, 3rem) 0 clamp(2.25rem, 4.5vh, 3.25rem);
+}
+
+/* The introduction sits at the site's base body scale — a clear step down
+   from the heading — on a narrow measure, plainly set, not italic. */
+.page-about .ab-bio .lede {
+  font-size: calc(var(--step-1) * 0.95);
+  line-height: 1.8;
+  max-width: 52ch;
+  font-style: normal;
+}
+
+.page-about .ab-bio > p + p {
+  margin-top: 1.6rem;
+}
+
+/* The figure spans the row, which the text column sets, so the square plate
+   inside it can be placed against the type: its top edge sits level with the
+   middle of the first heading line, and its bottom edge a little above the
+   last line of the introduction. Both are percentages of the text block, so
+   the alignment holds as the type scale changes. Right-aligned, which keeps
+   the page margin exactly where it was. */
+.page-about .ab-portrait {
+  position: relative;
+  align-self: stretch;
+  margin: 0;
+}
+
+.page-about .ab-portrait img {
+  position: absolute;
+  top: 13.7%;
+  right: 0;
+  height: 78.7%;
+  width: auto;
+  max-width: none;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* The plate's size comes from the text block's height, which is independent of
+   this column's width — so at some window widths it would grow wider than the
+   column and eat into the channel between the two. Capping it at the column
+   width keeps the square intact and the channel predictable. */
+@supports (height: 1cqw) {
+  .page-about .ab-portrait {
+    container-type: size;
+  }
+
+  .page-about .ab-portrait img {
+    height: min(78.7%, 100cqw);
+  }
+}
+
+/* Below this width the text block is tall relative to its column, so the
+   type-aligned plate would be wider than the column allows: fall back to a
+   square that simply fills the column. */
+@media (max-width: 1100px) {
+  .page-about .ab-portrait {
+    align-self: center;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .page-about .ab-portrait img {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    aspect-ratio: auto;
+  }
+}
+
+/* ---- 2 · A little more about me ----------------------------------------
+   A narrow, personal column set off the left margin, so this section reads
+   differently from the two above it. */
+
+.page-about .ab-personal-grid {
+  /* Narrower than the opening section — this is the quieter, more personal
+     of the two — but only by about a tenth, so it reads as inset rather
+     than stranded. */
+  max-width: 68.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 0.52fr) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  /* Stretch, not centre: the plate takes its height from the row, which the
+     text column sets — so image and text are exactly the same height and
+     neither runs past the other. */
+  align-items: stretch;
+}
+
+.page-about .ab-portrait2 {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-cream);
+}
+
+/* Out of flow, so the photograph contributes no intrinsic height and the
+   text block alone decides how tall the pair is. Cover keeps the natural
+   proportions: against this plate the 3:4 source gives up about six per cent
+   of its width, three per cent from either side, which leaves the lanterns
+   and the tree intact. */
+.page-about .ab-portrait2 img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.page-about .ab-personal {
+  margin-top: clamp(1.75rem, 3.5vh, 2.5rem);
+}
+
+/* All three paragraphs share one treatment — the same soft ink the opening
+   section's body copy uses, so this secondary section never reads heavier
+   than the introduction above it. This overrides the .ink utility on the
+   first paragraph, which is why all three land on the same value. */
+.page-about .ab-personal .lede {
+  color: var(--color-ink-soft);
+}
+
+.page-about .ab-personal > p + p {
+  margin-top: 1.5rem;
+}
+
+/* The same body treatment as the opening section: identical scale, leading
+   and measure, so neither section reads as the smaller print. */
+.page-about .ab-personal .lede {
+  font-size: calc(var(--step-1) * 0.95);
+  line-height: 1.8;
+  max-width: 52ch;
+}
+
+/* ---- 3 · Credentials ----------------------------------------------------
+   A compact information strip between two thin rules — deliberately not a
+   full screen, and not a résumé. */
+
+.page-about .ab-credentials-section {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.page-about .ab-cred {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 2.15fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: start;
+  padding-block: clamp(1.75rem, 3.5vh, 2.5rem);
+  border-block: 1px solid var(--color-border);
+}
+
+.page-about .ab-cred__title {
+  font-size: var(--step-3);
+}
+
+.page-about .ab-cred__license {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+}
+
+.page-about .ab-cred__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 0.7fr 1.05fr;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  margin: 0;
+}
+
+.page-about .ab-cred__item dt {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.page-about .ab-cred__item dd {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--color-ink-soft);
+}
+
+.page-about .ab-cred__item ul {
+  list-style: none;
+}
+
+.page-about .ab-cred__item li + li {
+  margin-top: 0.3rem;
+}
+
+/* ---- Tablet & mobile ---------------------------------------------------
+   No forced section heights below 901px. The photograph leads the page at a
+   shape that suits a narrow screen, the columns stack, and the credentials
+   strip becomes a simple stacked list. */
+
+@media (max-width: 900px) {
+  .page-about .ab-hero {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 6vw, 3rem);
+  }
+
+  .page-about .ab-portrait {
+    order: -1;
+    aspect-ratio: 5 / 4;
+    max-height: 52vh;
+  }
+
+  .page-about .ab-hero h1 {
+    max-width: 14ch;
+  }
+
+  .page-about .ab-bio .lede {
+    max-width: none;
+  }
+
+  .page-about .ab-hero__text {
+    max-width: none;
+    padding-block: clamp(3rem, 8vw, 5rem);
+  }
+
+  .page-about .ab-personal-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 2.75rem);
+  }
+
+  .page-about .ab-portrait2 {
+    aspect-ratio: 4 / 5;
+    max-height: 56vh;
+  }
+
+  .page-about .ab-cred {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 2rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .page-about .ab-portrait {
+    aspect-ratio: 4 / 5;
+    max-height: 52vh;
+  }
+
+  .page-about .ab-cred__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   Homepage — four sections, and as little else as possible
+   Scoped to body.page-home. The hero, the dark closing band, the button, the
+   text link and the body type are all existing components used as they are;
+   what is new here is only the arrangement of the two middle sections. Both
+   of them are built from type and space alone — no cards, rules, icons or
+   containers — because on a page this sparse any added edge becomes the thing
+   the eye goes to first.
+   ========================================================================== */
+
+/* ---- Client thoughts ----------------------------------------------------
+   Five thoughts set as an editorial composition rather than a stack: three
+   across, then two beneath, divided by hairlines and nothing else. Two earlier
+   versions bracket this one — the first scattered them at staggered indents
+   and read as messy, the second stacked them in one column and read as plain.
+   ========================================================================== */
+
+/* One viewport, plus a short tail at the foot of the section.
+
+   The tail is added twice over — 4rem onto the height and the same 4rem onto
+   the bottom padding — and that is the whole trick. The composition centres in
+   the padding box, and adding the same amount to both leaves that box exactly
+   the height and exactly the position it had before, so the heading and the
+   quotes do not move by a pixel. All that changes is where the section's
+   bottom edge falls: 4rem further down, past the foot of the window, which is
+   what stops a strip of the next section showing there.
+
+   The padding is also a floor for short windows, where the content is taller
+   than the viewport and the section simply grows.
+
+   No background of its own: the section sits on the page's cream, with the
+   deeper cream of the introduction below it. */
+.page-home .hm-voices {
+  min-height: calc(100vh + 4rem);
+  min-height: calc(100svh + 4rem);
+  display: flex;
+  align-items: center;
+  padding-block: clamp(3rem, 6vw, 5rem) calc(clamp(3rem, 6vw, 5rem) + 4rem);
+}
+
+/* .wrap is a flex item here, so it needs to be told to take the row; without
+   this it shrinks to its content and its centring stops working. */
+.page-home .hm-voices > .wrap {
+  width: 100%;
+}
+
+/* The composition spans the measure and is symmetrical, so the heading centres
+   over it rather than ranging left the way a single column of text would. */
+.page-home .hm-voices__inner {
+  text-align: center;
+}
+
+/* A quiet section heading, deliberately far below the hero headline in the
+   hierarchy, and set in the display face upright so the italic below it stays
+   the expressive voice on the page. */
+.page-home .hm-voices__title {
+  font-family: var(--font-display);
+  /* Enough presence to open a full screen, and still clearly below the hero
+     headline — a little over two thirds of it. */
+  font-size: clamp(1.6rem, 1.25rem + 1.15vw, 2.2rem);
+  line-height: 1.3;
+  color: var(--color-ink);
+  margin-bottom: clamp(2.5rem, 5.5vw, 4.5rem);
+}
+
+/* The interval between the two rows. It is deliberately tighter than the
+   breathing room inside the cells: the five thoughts should read as one
+   composition in two registers, not as two separate rows. */
+.page-home .hm-voices__rows {
+  display: grid;
+  row-gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* No gap between the cells: the hairline between them is the interval, and a
+   gap either side of it would read as two margins with a line floating in the
+   middle. The breathing room is inside each cell instead. */
+.page-home .hm-row {
+  display: grid;
+  gap: 0;
+}
+
+.page-home .hm-voice {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.2rem, 1.06rem + 0.5vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--color-ink);
+  /* Cells in a row are equal height, so a one-line thought beside a two-line
+     one would otherwise sit at the top of its cell. Centring inside the cell
+     puts every thought on the row's middle, and the hairline still runs the
+     full height because the cell itself still stretches. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* The side padding is what holds the thoughts clear of the hairlines; it is
+     kept modest so the column still has room for a long thought to break over
+     two lines rather than three. */
+  padding: clamp(0.75rem, 1.6vw, 1.35rem) clamp(0.9rem, 2vw, 1.85rem);
+  /* Lines evened out rather than filled, so a thought that wraps inside its
+     column does not leave one word alone on the last line. */
+  text-wrap: balance;
+}
+
+@media (min-width: 901px) {
+  /* Three across, then two beneath. The second row is exactly two thirds of
+     the width, which makes its two cells the same width as the three above and
+     lands each of them centred on a hairline of the row above — the rows
+     interlock instead of stacking, which is what keeps the block reading as a
+     composition rather than a table. */
+  .page-home .hm-row--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .page-home .hm-row--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 66.6667%;
+    margin-inline: auto;
+  }
+
+  /* The dividers: one hairline between neighbours in a row, in the site's
+     existing border colour, and none on the outside edges. */
+  .page-home .hm-row > .hm-voice + .hm-voice {
+    border-left: 1px solid var(--color-border);
+  }
+}
+
+@media (max-width: 900px) {
+  /* Collapsed to one column rather than squeezed into three. The hairline
+     turns with the layout — between the rows instead of between the columns —
+     so the thoughts stay separated the same way, and the outer edges stay
+     open. */
+  .page-home .hm-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-home .hm-voices__rows {
+    row-gap: 0;
+  }
+
+  .page-home .hm-voice {
+    padding-block: clamp(1.1rem, 3.2vw, 1.6rem);
+  }
+
+  .page-home .hm-voice + .hm-voice,
+  .page-home .hm-row + .hm-row .hm-voice:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+/* ---- Introduction -------------------------------------------------------
+   The portrait and a narrow column of copy. The band is the site's existing
+   deeper cream, which gives the photograph an edge to sit against without
+   drawing a border around it. */
+.page-home .hm-intro-section {
+  padding-block: clamp(5.5rem, 11vw, 9rem);
+}
+
+.page-home .hm-intro {
+  display: grid;
+  /* The portrait is set at a fixed width rather than a share of the row —
+     16.25rem is two thirds of the 390px it previously took — and the copy
+     gets its reading measure, not the remainder. Neither column stretches to
+     fill the band, so the pair is centred in it instead: the whitespace ends
+     up around the two columns rather than trapped to the right of the text.
+     The copy's track can still shrink below its cap on a narrow screen. */
+  grid-template-columns: 16.25rem minmax(0, 34.5rem);
+  justify-content: center;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.page-home .hm-portrait {
+  margin: 0;
+}
+
+/* Full frame, no crop: the photograph keeps its own proportions. */
+.page-home .hm-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.page-home .hm-intro__title {
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  line-height: 1.15;
+  margin-bottom: clamp(1.5rem, 3.5vh, 2.25rem);
+}
+
+/* Deliberately short of the column it sits in. A line this long is easier to
+   read at a fixed measure than stretched to whatever the grid leaves over,
+   and the space left at the right is part of how the section breathes. */
+.page-home .hm-intro__text .lede {
+  max-width: 54ch;
+}
+
+.page-home .hm-intro__text .lede + .lede {
+  margin-top: 1.35rem;
+}
+
+/* A text link, not a button: the site's existing underlined terracotta link,
+   set clear of the paragraph above it. */
+.page-home .hm-intro__link {
+  margin-top: clamp(2rem, 4.5vh, 2.75rem);
+}
+
+@media (max-width: 800px) {
+  .page-home .hm-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2.5rem, 7vw, 3.5rem);
+  }
+
+  /* Stacked, the portrait keeps the same width it has on a desktop, so it
+     stays the same size throughout rather than growing on a phone. */
+  .page-home .hm-portrait {
+    max-width: 16.25rem;
+  }
+}
+
+/* ---- Closing ------------------------------------------------------------
+   The shared dark band, with the headline and the button only. The rule below
+   is scoped to this page so the other pages' closings, which carry paragraphs
+   between the two, are untouched. */
+.page-home .closing .hero__actions {
+  margin-top: clamp(2.25rem, 4.5vh, 3rem);
+}

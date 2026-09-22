@@ -1,4 +1,6 @@
 ---
-import Base from '../layouts/Base.astro';
+import BlogLayout from '../layouts/BlogLayout.astro';
 ---
-<Base title="Page not found | Dongming Zhao, LCSW" description="The requested page could not be found." path="/404/" hideClosing={true}><section class="section"><div class="shell"><p class="eyebrow">404</p><h1>This page has moved.</h1><p class="lede">Let’s help you find your way back.</p><a class="button" href="./">Return home</a></div></section></Base>
+<BlogLayout title="Page not found | Dongming Zhao, LCSW" description="The requested page could not be found." path="/404/">
+  <section class="page-hero"><div class="wrap"><span class="eyebrow">404</span><h1>This page has moved.</h1><hr class="rule" /><p class="lede">Let’s help you find your way back.</p><p style="margin-top: 2rem"><a class="btn btn--primary" href="/">Return home</a></p></div></section>
+</BlogLayout>

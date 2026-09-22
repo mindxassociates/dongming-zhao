@@ -1,0 +1,12 @@
+---
+import { getCollection, render } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+export async function getStaticPaths() { const posts = await getCollection('blogEn', ({ data }) => !data.draft); return posts.map((post) => ({ params: { slug: post.data.slug }, props: { post } })); }
+const { post } = Astro.props;
+const { Content } = await render(post);
+const translations = post.data.translationKey ? await getCollection('blogZh', ({ data }) => !data.draft && data.translationKey === post.data.translationKey) : [];
+const alternatePath = translations[0] ? `/zh/blog/${translations[0].data.slug}/` : undefined;
+---
+<BlogLayout title={post.data.seoTitle || `${post.data.title} | Dongming Zhao, LCSW`} description={post.data.seoDescription || post.data.description} path={`/blog/${post.data.slug}/`} alternatePath={alternatePath} type="article" image={post.data.image} publishedTime={post.data.date} modifiedTime={post.data.updatedDate}>
+  <article class="section blog-article"><div class="wrap blog-prose"><p class="blog-date"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('en-US', { dateStyle: 'long' })}</time></p><h1>{post.data.title}</h1><hr class="rule" />{alternatePath && <p class="blog-language"><a href={alternatePath} lang="zh-Hans">阅读中文版 →</a></p>}{post.data.image && <img class="blog-image" src={post.data.image} alt={post.data.imageAlt || ''} />}<div class="prose"><Content /></div></div></article>
+</BlogLayout>

@@ -1,7 +1,240 @@
 ---
-import Base from '../layouts/Base.astro';
-const faqs=[['What happens in the first session?','We’ll talk about what brings you to therapy, what has been going on recently, and experiences or patterns that may be connected. You do not need to prepare or tell me everything at once.'],['How often do we meet?','Most clients meet weekly, especially at the beginning. As things improve and you feel ready, we may move to every other week.'],['How long do people typically stay in therapy?','There is no fixed timeline. Support around a specific stressor may be shorter-term, while longstanding patterns or complex trauma may take more time.'],['Do you work with trauma?','Yes. I take a trauma-informed approach. We will not rush into difficult experiences before you are ready, and we will pay attention to what feels manageable.'],['Do you see clients outside California?','For therapy, you must be physically located in California at the time of each session because I am licensed in California.'],['Do you offer in-person sessions?','Yes. I offer in-person sessions at my office in Anaheim, CA 92807, as well as telehealth throughout California.'],['Do you accept insurance?','I do not accept insurance directly. I can provide a superbill upon request for possible out-of-network reimbursement. Reimbursement varies by plan and is not guaranteed.'],['What are your fees?','Individual therapy is $200 per session. Couples therapy is $250 per session.'],['What is your cancellation policy?','I ask for at least 24 hours’ notice. Late cancellations are charged 50% of the session fee; missed appointments without notice are charged the full session fee.'],['What does couples intake look like?','Our first session is together. I then typically meet with each partner individually for one session before returning to joint sessions.'],['When might I not be the right therapist?','I may not be the right fit for crisis or emergency care, formal psychological evaluations, court-related documentation, or needs requiring a higher level of care. I will discuss referrals when possible.']];
+import Seo from '../components/Seo.astro';
 ---
-<Base title="Therapy FAQ, Fees & Insurance | Dongming Zhao, LCSW" description="Answers about therapy fees, insurance, telehealth, in-person care, scheduling, cancellation, and getting started with Dongming Zhao, LCSW." path="/faq/">
-<section class="page-hero"><div class="shell reveal"><p class="eyebrow">Frequently asked questions</p><h1>What to know before we begin.</h1><p class="lede">Clear information about fit, fees, sessions, and logistics.</p></div></section><section class="section band"><div class="shell details">{faqs.map(([q,a])=><details><summary>{q}</summary><div><p>{a}</p></div></details>)}</div></section>
-</Base>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ | Dongming Zhao, LCSW</title>
+  <meta name="description" content="Answers about rates, insurance, session structure, and starting therapy with Dongming Zhao, LCSW in Anaheim and throughout California." />
+  <Seo title="FAQ | Dongming Zhao, LCSW" description="Answers about rates, insurance, session structure, and starting therapy with Dongming Zhao, LCSW in Anaheim and throughout California." path="/faq/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="page-faq">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header site-header--inset">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="/">Dongming Zhao</a>
+
+      <nav class="nav" data-open="false" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/individual-therapy/">Individual Therapy</a></li>
+          <li><a href="/couples-therapy/">Couples Therapy</a></li>
+          <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/" aria-current="page">FAQ</a></li>
+          <li class="nav__action"><a class="btn btn--primary btn--pill" href="/contact/">Contact</a></li>
+        </ul>
+        <button class="nav__toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav__toggle-icon"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 1 — Structure & rates: plainly stated, nothing hidden behind a control -->
+    <section class="section fq-section">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <h2 class="h-lg">What to know before we begin</h2>
+        </div>
+
+        <div class="fq-facts reveal">
+          <div class="fq-rates">
+            <div class="fq-rate">
+              <p class="fq-label">Individual Therapy</p>
+              <p class="fq-rate__detail">50 minutes &middot; $200</p>
+            </div>
+            <div class="fq-rate">
+              <p class="fq-label">Couples Therapy</p>
+              <p class="fq-rate__detail">60 minutes &middot; $250</p>
+            </div>
+          </div>
+
+          <div class="fq-note">
+            <p class="fq-label">Insurance &amp; Superbill</p>
+            <p class="lede lede--wide">I do not accept insurance directly. I can provide a superbill upon request if you would like to seek out-of-network reimbursement from your insurance plan. Reimbursement varies by plan and is not guaranteed.</p>
+          </div>
+
+          <div class="fq-note">
+            <p class="fq-label">Location</p>
+            <p class="lede lede--wide">I offer both telehealth and in-person therapy. For telehealth sessions, clients must be physically located in California at the time of the session. In-person sessions are available at my office in Anaheim, CA 92807.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 — Frequently asked questions: the site's existing accordion -->
+    <section class="section section--band fq-section">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-lg">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-list it-rows reveal">
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-1" id="faq-trigger-1">
+              <span>What can I expect in the first session?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1">
+              <div class="faq-item__panel-inner">
+                <p>In our first session, we&rsquo;ll talk about what brings you to therapy, what has been going on recently, and some of the experiences or patterns that may be connected to it. You don&rsquo;t need to prepare or tell me everything at once &mdash; we&rsquo;ll take our time and start with what feels most important to you.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2">
+              <span>How often do we meet?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2">
+              <div class="faq-item__panel-inner">
+                <p>Most clients meet with me weekly, especially at the beginning of therapy. As things improve and you feel ready for more space between sessions, we may move to every other week.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3">
+              <span>How long do people typically stay in therapy?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3">
+              <div class="faq-item__panel-inner">
+                <p>There isn&rsquo;t a fixed timeline. Some clients come in for support around a specific stressor or life transition and find that shorter-term therapy is enough, while longstanding patterns or complex trauma may take more time.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-4" id="faq-trigger-4">
+              <span>Do you work with trauma?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-4" role="region" aria-labelledby="faq-trigger-4">
+              <div class="faq-item__panel-inner">
+                <p>Yes. I work with trauma and take a trauma-informed approach. We won&rsquo;t rush into difficult experiences before you&rsquo;re ready, and we&rsquo;ll pay attention to what feels manageable as we go.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-5" id="faq-trigger-5">
+              <span>Do you see clients outside California?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-5" role="region" aria-labelledby="faq-trigger-5">
+              <div class="faq-item__panel-inner">
+                <p>For therapy, you must be physically located in California at the time of each session because I am licensed in California. If you&rsquo;re temporarily traveling outside the state, please let me know so we can plan around your sessions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-6" id="faq-trigger-6">
+              <span>Do you offer in-person sessions?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6">
+              <div class="faq-item__panel-inner">
+                <p>Yes. I offer in-person sessions at my office in Anaheim, CA 92807, as well as telehealth throughout California.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-7" id="faq-trigger-7">
+              <span>Do you accept insurance?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-7" role="region" aria-labelledby="faq-trigger-7">
+              <div class="faq-item__panel-inner">
+                <p>I do not accept insurance directly. I can provide a superbill upon request if you would like to seek out-of-network reimbursement from your insurance plan. Reimbursement varies by plan and is not guaranteed.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-8" id="faq-trigger-8">
+              <span>What is your cancellation policy?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-8" role="region" aria-labelledby="faq-trigger-8">
+              <div class="faq-item__panel-inner">
+                <p>I ask for at least 24 hours&rsquo; notice if you need to cancel or reschedule a session. Cancellations made within 24 hours are charged 50% of the session fee ($100 for individual therapy and $125 for couples therapy). Missed appointments without notice are charged the full session fee ($200 for individual therapy and $250 for couples therapy).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-9" id="faq-trigger-9">
+              <span>For couples and partners: What does the intake process look like?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-9" role="region" aria-labelledby="faq-trigger-9">
+              <div class="faq-item__panel-inner">
+                <p>Our first session is together. After that, I typically meet with each partner individually for one session so I can better understand each person&rsquo;s history, attachment experiences, and perspective on the relationship. We then return to meeting together, with additional individual sessions considered during therapy when clinically appropriate.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-open="false">
+            <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-panel-10" id="faq-trigger-10">
+              <span>When might I not be the right therapist for you?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-10" role="region" aria-labelledby="faq-trigger-10">
+              <div class="faq-item__panel-inner">
+                <p>I may not be the right therapist for you if you are seeking crisis or emergency care, formal psychological evaluations or court-related documentation, or if you need a higher level of care than outpatient therapy can provide. If another type of support would better meet your needs, I&rsquo;ll discuss that with you and provide referrals or resources when possible.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA — the shared component; identical on every page -->
+    <section class="section--ink cta">
+      <div class="wrap">
+        <h2 class="cta__title">If this feels like the right place to begin, I&rsquo;d love to hear from you.</h2>
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="https://therapywithdongming.sessionshealth.com/request" target="_blank" rel="noopener noreferrer">Book a Free 15-Minute Consultation</a>
+        </div>
+        <p class="cta__email"><a href="mailto:therapywithdongming@gmail.com">therapywithdongming@gmail.com</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p>&copy; <span id="year"></span> Dongming Zhao, LCSW</p>
+      <ul class="site-footer__links">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/individual-therapy/">Individual Therapy</a></li>
+        <li><a href="/couples-therapy/">Couples Therapy</a></li>
+        <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+        <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,8 +1,136 @@
 ---
-import Base from '../layouts/Base.astro';
+import Seo from '../components/Seo.astro';
 ---
-<Base title="Couples Therapy in California | Dongming Zhao, LCSW" description="Emotionally focused couples therapy to help partners understand painful cycles, rebuild trust, and strengthen connection in California." path="/couples-therapy/">
-<section class="page-hero"><div class="shell reveal"><p class="eyebrow">Couples therapy</p><h1>Move from the same painful cycle toward connection.</h1><p class="lede">For partners who care about each other and want new ways to understand, reach, and respond to one another.</p></div></section>
-<section class="section band"><div class="shell"><p class="eyebrow">Does this sound familiar?</p><div class="voices reveal"><p class="voice">“Why do we keep having the same fight?”</p><p class="voice">“We love each other, but we don’t feel close anymore.”</p><p class="voice">“I don’t know if I can trust my partner again.”</p></div></div></section>
-<section class="section"><div class="shell prose reveal"><p class="eyebrow">The pattern between you</p><h2>Understanding what happens beneath the argument.</h2><p class="lede">One of you may push for more talking or reassurance while the other goes quiet or gets defensive. The harder one tries to be heard, the more criticized the other feels, and you both end up alone in it.</p><p>Drawing primarily from Emotionally Focused Therapy, we slow the cycle down, make room for what each of you is protecting, and build enough safety for both partners to feel seen and understood.</p><p>I also draw from IFS, the Gottman Method, and CBT when useful. The goal is not simply to solve today’s argument, but to help build a relationship where both partners feel emotionally safe and genuinely connected.</p></div></section>
-</Base>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Couples Therapy | Dongming Zhao, LCSW</title>
+  <meta name="description" content="Couples therapy grounded in Emotionally Focused Therapy (EFT), helping partners rebuild emotional connection — online throughout California." />
+  <Seo title="Couples Therapy | Dongming Zhao, LCSW" description="Couples therapy grounded in Emotionally Focused Therapy (EFT), helping partners rebuild emotional connection—online throughout California." path="/couples-therapy/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="page-couples">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header site-header--inset">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="/">Dongming Zhao</a>
+
+      <nav class="nav" data-open="false" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/individual-therapy/">Individual Therapy</a></li>
+          <li><a href="/couples-therapy/" aria-current="page">Couples Therapy</a></li>
+          <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li class="nav__action"><a class="btn btn--primary btn--pill" href="/contact/">Contact</a></li>
+        </ul>
+        <button class="nav__toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav__toggle-icon"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 1 — “Sound familiar?” -->
+    <section class="section it-spread it-spread--quotes">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">Sound familiar?</span>
+          <h2 class="h-lg section-heading">Maybe you&rsquo;ve been asking yourselves&hellip;</h2>
+        </div>
+        <div class="quote-grid reveal">
+          <p class="quote">&ldquo;Why do we keep having the same fight?&rdquo;</p>
+          <p class="quote">&ldquo;I don&rsquo;t feel like my partner really understands me.&rdquo;</p>
+          <p class="quote">&ldquo;We love each other, but we don&rsquo;t feel close anymore.&rdquo;</p>
+          <p class="quote">&ldquo;I don&rsquo;t know if I can trust my partner again.&rdquo;</p>
+          <p class="quote">&ldquo;Sometimes I wonder if we&rsquo;re still right for each other.&rdquo;</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 — Relationship patterns -->
+    <section class="section section--band it-spread it-spread--fit">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">Relationship patterns</span>
+          <h2 class="h-lg">Caught in the same painful cycle</h2>
+        </div>
+        <div class="reveal prose prose--centered">
+          <p class="lede lede--wide ink">You may love each other and still have the same argument every time. One of you pushes for more &mdash; more talking, more reassurance &mdash; while the other goes quiet or gets defensive. The harder one of you tries to be heard, the more criticized the other feels, and you both end up alone in it.</p>
+          <p class="lede lede--wide">Or maybe you don&rsquo;t fight much at all. You manage work and family well enough, but the closeness has thinned out. Conversations stay practical, and affection isn&rsquo;t what it was.</p>
+          <p class="lede lede--wide">Sometimes there&rsquo;s a deeper injury underneath: a betrayal, broken trust, resentment that built up over years. The care may still be there, even as you wonder how you got here and whether this can work.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 — “What working together is like” -->
+    <section class="section it-spread it-spread--prose">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">Working together</span>
+          <h2 class="h-lg">What working together is like</h2>
+        </div>
+        <div class="reveal prose prose--centered">
+          <p class="lede lede--wide ink">This isn&rsquo;t about learning the perfect way to communicate. It&rsquo;s about creating enough safety for both of you to feel seen and understood.</p>
+          <p class="lede lede--wide">We&rsquo;ll slow down the conversations that keep ending in frustration and look beneath the anger, criticism, withdrawal, or silence. Often, the conflict isn&rsquo;t the deepest problem &mdash; it&rsquo;s what the conflict has been protecting.</p>
+          <p class="lede lede--wide">As each of you begins to feel safer expressing what&rsquo;s underneath, new ways of connecting naturally become possible.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 — My approach -->
+    <section class="section section--band it-spread it-spread--prose">
+      <div class="wrap">
+        <div class="reveal it-head">
+          <span class="eyebrow">My approach</span>
+          <h2 class="h-lg">Emotionally Focused Couples Therapy (EFCT)</h2>
+        </div>
+        <div class="reveal prose prose--centered">
+          <p class="lede lede--wide ink">My work with couples is grounded in Emotionally Focused Therapy (EFT), an evidence-based approach that helps couples strengthen emotional connection and repair relationship distress.</p>
+          <p class="lede lede--wide">I also draw on Internal Family Systems (IFS), Acceptance and Commitment Therapy (ACT), and Cognitive Behavioral Therapy (CBT) when they best support your relationship.</p>
+          <p class="lede lede--wide">Rather than asking your relationship to fit one approach, I adapt therapy to fit both of you. The goal isn&rsquo;t simply to solve today&rsquo;s argument &mdash; it&rsquo;s to help you build a relationship where both partners feel emotionally safe, deeply understood, and genuinely connected.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA — the shared component; identical on every page -->
+    <section class="section--ink cta">
+      <div class="wrap">
+        <h2 class="cta__title">If this feels like the right place to begin, I&rsquo;d love to hear from you.</h2>
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="https://therapywithdongming.sessionshealth.com/request" target="_blank" rel="noopener noreferrer">Book a Free 15-Minute Consultation</a>
+        </div>
+        <p class="cta__email"><a href="mailto:therapywithdongming@gmail.com">therapywithdongming@gmail.com</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p>&copy; <span id="year"></span> Dongming Zhao, LCSW</p>
+      <ul class="site-footer__links">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/individual-therapy/">Individual Therapy</a></li>
+        <li><a href="/couples-therapy/">Couples Therapy</a></li>
+        <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+        <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

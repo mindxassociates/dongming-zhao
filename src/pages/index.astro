@@ -1,8 +1,132 @@
 ---
-import Base from '../layouts/Base.astro';import site from '../data/site.json';
+import Seo from '../components/Seo.astro';
 ---
-<Base title="Dongming Zhao, LCSW | Individual & Couples Therapy in California" description="Online and in-person individual and couples therapy in California, in English and Mandarin, with Dongming Zhao, LCSW." path="/">
-<section class="hero"><img src="images/hero.jpg" alt="A warm, sunlit room with a woven chair and plant shadows" width="1536" height="1024"/><div class="shell hero-content"><p class="eyebrow">Individual & couples therapy</p><h1>Greater clarity. Deeper connection. A way forward.</h1><p>Online throughout California · In person in Anaheim · English & Mandarin</p><a class="button light" href={site.bookingUrl} target="_blank" rel="noopener">{site.cta}</a></div></section>
-<section class="section"><div class="shell"><div class="reveal"><p class="eyebrow">You are not alone in this</p><h2>Do any of these thoughts sound familiar?</h2></div><div class="voices reveal"><p class="voice">“I feel like a failure.”</p><p class="voice">“I feel so stuck. I don’t know how to move forward.”</p><p class="voice">“I love my parents, but somehow I always end up feeling guilty.”</p></div></div></section>
-<section class="section band"><div class="shell grid-2"><figure class="portrait reveal"><img src="images/portrait-dongming.jpg" alt="Dongming Zhao standing outdoors beneath a lemon tree" width="1080" height="1440" loading="lazy"/></figure><div class="reveal"><p class="eyebrow">Meet your therapist</p><h2>Hi, I’m Dongming.</h2><p class="lede">I’m a Licensed Clinical Social Worker offering therapy for adults and couples throughout California, in both English and Mandarin.</p><p>I believe meaningful change begins with understanding ourselves more deeply—with curiosity rather than judgment. Together, we’ll make sense of the patterns that keep you stuck and create room for new ways of relating to yourself and the people who matter to you.</p><a class="button" href="about/">Learn more about me</a></div></div></section>
-</Base>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dongming Zhao, LCSW | Individual &amp; Couples Therapy in California</title>
+  <meta name="description" content="Online individual and couples therapy throughout California, in English and Mandarin, with Dongming Zhao, LCSW." />
+  <Seo title="Dongming Zhao, LCSW | Individual & Couples Therapy in California" description="Online individual and couples therapy throughout California, in English and Mandarin, with Dongming Zhao, LCSW." path="/" alternatePath="/zh/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="page-home">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="/">Dongming Zhao</a>
+
+      <nav class="nav" data-open="false" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/individual-therapy/">Individual Therapy</a></li>
+          <li><a href="/couples-therapy/">Couples Therapy</a></li>
+          <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li class="nav__action"><a class="btn btn--primary btn--pill" href="/contact/">Contact</a></li>
+        </ul>
+        <button class="nav__toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav__toggle-icon"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 1 — Hero: the photograph carries the section; three elements sit on it -->
+    <section class="hero">
+      <img
+        class="hero__image"
+        src="/images/hero.jpg"
+        alt="A sunlit, warm-toned room with plaster walls, a woven leather chair, and the shadow of a plant cast by afternoon light through a window."
+        width="1536"
+        height="1024"
+        fetchpriority="high"
+      />
+      <div class="wrap">
+        <div class="hero__content">
+          <h1>For individuals and couples seeking greater clarity, deeper connection, and a way forward.</h1>
+          <p class="hero__meta">Online throughout California &middot; English &amp; Mandarin</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="https://therapywithdongming.sessionshealth.com/request" target="_blank" rel="noopener noreferrer">Book a Free 15-Minute Consultation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 — Client thoughts: one heading and one orderly column beneath it -->
+    <section class="section hm-voices">
+      <div class="wrap">
+        <div class="reveal hm-voices__inner">
+          <h2 class="hm-voices__title">Do any of these thoughts sound familiar?</h2>
+          <div class="hm-voices__rows">
+            <div class="hm-row hm-row--3">
+              <p class="hm-voice">&ldquo;I feel like a failure.&rdquo;</p>
+              <p class="hm-voice">&ldquo;If people really knew me, they wouldn&rsquo;t want to be with me.&rdquo;</p>
+              <p class="hm-voice">&ldquo;I&rsquo;m scared I&rsquo;ll never find the right person.&rdquo;</p>
+            </div>
+            <div class="hm-row hm-row--2">
+              <p class="hm-voice">&ldquo;I feel so stuck. I don&rsquo;t know how to move forward.&rdquo;</p>
+              <p class="hm-voice">&ldquo;I love my parents, but somehow I always end up feeling guilty.&rdquo;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 — Introduction: portrait and a narrow column of copy -->
+    <section class="section section--band hm-intro-section">
+      <div class="wrap hm-intro">
+        <figure class="hm-portrait reveal">
+          <img src="/images/portrait-dongming.jpg" alt="Dongming Zhao, LCSW, standing outdoors beneath a lemon tree." width="1080" height="1440" loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="reveal hm-intro__text">
+          <h2 class="hm-intro__title">Hi, I&rsquo;m Dongming.</h2>
+          <p class="lede ink">I&rsquo;m a Licensed Clinical Social Worker offering therapy for adults and couples throughout California, in both English and Mandarin.</p>
+          <p class="lede">I believe meaningful change begins with understanding ourselves more deeply &mdash; with curiosity rather than judgment. Together, we&rsquo;ll make sense of the patterns that keep you stuck and create room for new ways of relating to yourself and the people who matter to you.</p>
+          <p class="lede">In couples therapy, we&rsquo;ll look at what happens between you &mdash; and work toward new ways of understanding and reaching each other.</p>
+          <a class="btn btn--text hm-intro__link" href="/about/">Learn More About Me &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA — the shared component; identical on every page -->
+    <section class="section--ink cta">
+      <div class="wrap">
+        <h2 class="cta__title">If this feels like the right place to begin, I&rsquo;d love to hear from you.</h2>
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="https://therapywithdongming.sessionshealth.com/request" target="_blank" rel="noopener noreferrer">Book a Free 15-Minute Consultation</a>
+        </div>
+        <p class="cta__email"><a href="mailto:therapywithdongming@gmail.com">therapywithdongming@gmail.com</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p>&copy; <span id="year"></span> Dongming Zhao, LCSW</p>
+      <ul class="site-footer__links">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/individual-therapy/">Individual Therapy</a></li>
+        <li><a href="/couples-therapy/">Couples Therapy</a></li>
+        <li><a href="/zh/">&#20013;&#25991;&#24515;&#29702;</a></li>
+        <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

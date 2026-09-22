@@ -1,4 +1,9 @@
 ---
-import Base from '../../layouts/Base.astro';import {getCollection} from 'astro:content';const posts=(await getCollection('blog',p=>!p.data.draft)).sort((a,b)=>b.data.date.valueOf()-a.data.date.valueOf());
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+const posts = (await getCollection('blogEn', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base title="Reflections & Resources | Dongming Zhao, LCSW" description="Therapy reflections and mental health resources from Dongming Zhao, LCSW." path="/blog/"><section class="page-hero"><div class="shell"><p class="eyebrow">Reflections & resources</p><h1>Ideas for understanding yourself and your relationships.</h1></div></section><section class="section band"><div class="shell cards">{posts.length?posts.map(p=><article class="card"><h2>{p.data.title}</h2><p>{p.data.description}</p><a href={`blog/${p.id}/`}>Read article</a></article>):<p>No articles are published yet. Please check back soon.</p>}</div></section></Base>
+<BlogLayout title="Reflections & Resources | Dongming Zhao, LCSW" description="Therapy reflections and mental health resources from Dongming Zhao, LCSW." path="/blog/">
+  <section class="page-hero blog-hero"><div class="wrap reveal"><span class="eyebrow">Reflections & resources</span><h1>Ideas for understanding yourself and your relationships.</h1><hr class="rule" /><p class="lede lede--wide">Articles are available in English and Chinese when a translation has been published.</p><p class="blog-language"><a href="/zh/blog/" lang="zh-Hans">阅读中文文章 →</a></p></div></section>
+  <section class="section section--band"><div class="wrap blog-list">{posts.length ? posts.map((post) => <article class="blog-card reveal"><p class="blog-date"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('en-US', { dateStyle: 'long' })}</time></p><h2><a href={`/blog/${post.data.slug}/`}>{post.data.title}</a></h2><p class="lede">{post.data.description}</p><a class="btn btn--text" href={`/blog/${post.data.slug}/`}>Read article →</a></article>) : <p>No articles are published yet. Please check back soon.</p>}</div></section>
+</BlogLayout>

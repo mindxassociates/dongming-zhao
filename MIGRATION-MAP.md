@@ -1,13 +1,15 @@
 # Migration map
 
-| Original | New route | Notes |
+| Original file | Astro route | Notes |
 | --- | --- | --- |
-| `index.html` | `/` | Preserved hero, introductory themes, portrait, and consultation CTA; enhanced motion and responsive layout. |
-| `about.html` | `/about/` | Preserved biography, approaches, languages, and photographs. |
-| `individual-therapy.html` | `/individual-therapy/` | Preserved focus areas and working-together copy in accessible native accordions. |
-| `couples-therapy.html` | `/couples-therapy/` | Preserved relationship-cycle and therapy approach content. |
-| `faq.html` | `/faq/` | Preserved fees, insurance, location, cancellation, intake, and fit details. |
-| `contact.html` | `/contact/` | Preserved Sessions Health booking and public email; no insecure static contact form added. |
-| `zhongwen.html` | `/zh/` | Reorganized as the intentional Simplified Chinese route with localized metadata. |
+| `index.html` | `/` | Original visual design and copy preserved |
+| `about.html` | `/about/` | Original layout and photographs preserved |
+| `individual-therapy.html` | `/individual-therapy/` | Original content preserved |
+| `couples-therapy.html` | `/couples-therapy/` | Original content preserved |
+| `zhongwen.html` | `/zh/` | Original Chinese page preserved; old URL redirects |
+| `faq.html` | `/faq/` | Original FAQ preserved |
+| `contact.html` | `/contact/` | Original contact content preserved; no added crisis numbers |
+| none | `/blog/` | English Pages CMS collection |
+| none | `/zh/blog/` | Chinese Pages CMS collection |
 
-The original ZIP contained static source, not Astro. Shared layout, navigation, footer, metadata, and motion were reconstructed as maintainable Astro components. No server-backed features or tracking scripts were present or added.
+The original CSS and JavaScript now live at `public/style.css` and `public/main.js`. SEO/GEO additions are metadata and content architecture changes, not a visual redesign.

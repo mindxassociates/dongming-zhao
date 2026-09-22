@@ -1,0 +1,21 @@
+---
+import Seo from '../components/Seo.astro';
+const { lang = 'en', ...seo } = Astro.props;
+const isZh = lang === 'zh-Hans';
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{seo.title}</title><meta name="description" content={seo.description} /><Seo {...seo} lang={lang} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" /><link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="page-blog">
+    <a class="skip-link" href="#main">{isZh ? '跳至正文' : 'Skip to content'}</a>
+    <header class="site-header site-header--inset"><div class="wrap site-header__inner"><a class="brand" href="/">Dongming Zhao</a><nav class="nav" data-open="false" aria-label={isZh ? '主导航' : 'Primary'}><ul class="nav__links"><li><a href="/about/">About</a></li><li><a href="/individual-therapy/">Individual Therapy</a></li><li><a href="/couples-therapy/">Couples Therapy</a></li><li><a href="/zh/" lang="zh-Hans">中文心理</a></li><li><a href={isZh ? '/zh/blog/' : '/blog/'} aria-current="page">{isZh ? '博客' : 'Blog'}</a></li><li><a href="/faq/">FAQ</a></li><li class="nav__action"><a class="btn btn--primary btn--pill" href="/contact/">Contact</a></li></ul><button class="nav__toggle" type="button" aria-label={isZh ? '打开或关闭菜单' : 'Toggle menu'} aria-expanded="false"><span class="nav__toggle-icon"></span></button></nav></div></header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer"><div class="wrap site-footer__inner"><p>© <span id="year"></span> Dongming Zhao, LCSW</p><ul class="site-footer__links"><li><a href="/about/">About</a></li><li><a href="/individual-therapy/">Individual Therapy</a></li><li><a href="/couples-therapy/">Couples Therapy</a></li><li><a href="/zh/" lang="zh-Hans">中文心理</a></li><li><a href={isZh ? '/zh/blog/' : '/blog/'}>{isZh ? '博客' : 'Blog'}</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Contact</a></li></ul></div></footer>
+    <script src="/main.js"></script><script is:inline>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  </body>
+</html>

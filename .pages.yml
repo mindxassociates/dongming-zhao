@@ -1,39 +1,71 @@
 media:
   input: public/images/uploads
   output: /images/uploads
+
 content:
   - name: settings
-    label: Practice settings
+    label: Practice settings / 网站设置
     type: file
     path: src/data/site.json
     format: json
     fields:
-      - { name: name, label: Professional name, type: string }
-      - { name: shortName, label: Short name, type: string }
-      - { name: email, label: Public email, type: string }
-      - { name: bookingUrl, label: Consultation booking link, type: string }
-      - { name: location, label: Office location, type: string }
-      - { name: serviceArea, label: Service area, type: string }
-      - { name: languages, label: Languages, type: string }
-      - { name: cta, label: Booking button text, type: string }
-  - name: blog
-    label: Articles
+      - { name: name, label: Professional name / 专业姓名, type: string }
+      - { name: shortName, label: Short name / 简称, type: string }
+      - { name: email, label: Public email / 公开邮箱, type: string }
+      - { name: bookingUrl, label: Consultation link / 预约链接, type: string }
+      - { name: location, label: Office location / 办公地点, type: string }
+      - { name: serviceArea, label: Service area / 服务地区, type: string }
+      - { name: languages, label: Languages / 语言, type: string }
+      - { name: cta, label: Booking button / 预约按钮文字, type: string }
+
+  - name: blog_en
+    label: English blog / 英文博客
     type: collection
-    path: src/content/blog
+    path: src/content/blog/en
     format: yaml-frontmatter
-    filename: "{fields.title|slugify}.md"
+    filename: "{fields.slug}.md"
     view:
-      fields: [title, date, draft]
+      fields: [title, date, draft, translationKey]
       primary: title
       sort: [date, title]
-      default:
-        sort: date
-        order: desc
+      default: { sort: date, order: desc }
     fields:
       - { name: title, label: Title, type: string, required: true }
-      - { name: description, label: Short description, type: text, required: true }
+      - { name: slug, label: URL slug, type: string, required: true, description: "Lowercase words separated by hyphens; do not change after publishing." }
+      - { name: description, label: Summary, type: text, required: true }
       - { name: date, label: Publication date, type: date, required: true }
+      - { name: updatedDate, label: Updated date, type: date, required: false }
       - { name: draft, label: Keep private as draft, type: boolean, default: true }
+      - { name: featured, label: Featured article, type: boolean, default: false }
+      - { name: translationKey, label: Translation key, type: string, required: false, description: "Use the same key in the matching Chinese article." }
       - { name: image, label: Featured image, type: image, required: false }
-      - { name: imageAlt, label: Featured image description, type: string, required: false }
+      - { name: imageAlt, label: Image description, type: string, required: false }
+      - { name: seoTitle, label: SEO title, type: string, required: false }
+      - { name: seoDescription, label: SEO description, type: text, required: false }
       - { name: body, label: Article, type: rich-text, required: true }
+
+  - name: blog_zh
+    label: 中文博客 / Chinese blog
+    type: collection
+    path: src/content/blog/zh
+    format: yaml-frontmatter
+    filename: "{fields.slug}.md"
+    view:
+      fields: [title, date, draft, translationKey]
+      primary: title
+      sort: [date, title]
+      default: { sort: date, order: desc }
+    fields:
+      - { name: title, label: 标题, type: string, required: true }
+      - { name: slug, label: 网址短名, type: string, required: true, description: "建议使用小写英文和连字符；发布后不要修改。" }
+      - { name: description, label: 摘要, type: text, required: true }
+      - { name: date, label: 发布日期, type: date, required: true }
+      - { name: updatedDate, label: 更新日期, type: date, required: false }
+      - { name: draft, label: 保留为草稿（不公开）, type: boolean, default: true }
+      - { name: featured, label: 推荐文章, type: boolean, default: false }
+      - { name: translationKey, label: 双语对应标识, type: string, required: false, description: "如有英文对应文章，请填写完全相同的标识。" }
+      - { name: image, label: 封面图片, type: image, required: false }
+      - { name: imageAlt, label: 图片说明, type: string, required: false }
+      - { name: seoTitle, label: SEO 标题, type: string, required: false }
+      - { name: seoDescription, label: SEO 描述, type: text, required: false }
+      - { name: body, label: 正文, type: rich-text, required: true }
